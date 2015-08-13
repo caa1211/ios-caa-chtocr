@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5BD280A3-C68D-4138-8ED7-EE2E98E49FB4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ios-caa-chtocr</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>099F474B42EFCAF4C41B1D55C894B92528CB0035</key>
+		<string>https://github.com/caa1211/ios-caa-chtocr.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios-caa-chtocr.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>099F474B42EFCAF4C41B1D55C894B92528CB0035</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/caa1211/ios-caa-chtocr.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>099F474B42EFCAF4C41B1D55C894B92528CB0035</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>099F474B42EFCAF4C41B1D55C894B92528CB0035</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios-caa-chtocr</string>
+		</dict>
+	</array>
+</dict>
+</plist>

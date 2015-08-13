@@ -32,6 +32,18 @@ using namespace cv;
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
     
+    // Text View
+    self.textView.editable = NO;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineHeightMultiple = 12.0f;
+    paragraphStyle.maximumLineHeight = 12.0f;
+    paragraphStyle.minimumLineHeight = 12.0f;
+    NSDictionary *ats = @{
+                          NSParagraphStyleAttributeName : paragraphStyle,
+                          };
+    self.textView.attributedText = [[NSAttributedString alloc] initWithString:@" " attributes:ats];
+    
+    // Default target image
     [self extractTextFromImage:[UIImage imageNamed:@"testImages/003-1.png"]];
 }
 
@@ -153,7 +165,7 @@ using namespace cv;
     
     NSString *recognizedText = tesseract.recognizedText;
     dispatch_sync(dispatch_get_main_queue(), ^{
-        self.textView.text = [self.textView.text stringByAppendingString:recognizedText];
+        [self.textView replaceRange:self.textView.selectedTextRange withText:recognizedText];
     });
 }
 
@@ -175,8 +187,9 @@ using namespace cv;
         NSString *recognizedText = tesseract.recognizedText;
         NSLog(@"recognizedText= %@", recognizedText);
         
-        self.textView.text = [self.textView.text stringByAppendingString:recognizedText];
         
+        [self.textView replaceRange:self.textView.selectedTextRange withText:recognizedText];
+
         [G8Tesseract clearCache];
     };
     

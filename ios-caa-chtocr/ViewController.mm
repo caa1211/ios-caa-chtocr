@@ -19,6 +19,7 @@ using namespace cv;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property(strong, nonatomic) dispatch_queue_t cropImageQueue;
+@property(assign, nonatomic) bool cancelOCR;
 @end
 
 
@@ -45,6 +46,8 @@ using namespace cv;
     
     // Default target image
     [self extractTextFromImage:[UIImage imageNamed:@"testImages/003-1.png"]];
+    
+    self.cancelOCR = NO;
 }
 
 -(void) extractTextFromImage:(UIImage*)image {
@@ -56,7 +59,7 @@ using namespace cv;
         // Crop image
         NSMutableArray *imgAry = [self cropLetters:image];
         NSLog(@"===========%ld================", imgAry.count);
-        
+        self.cancelOCR = NO;
         for (UIImage *cropedImage in imgAry) {
             //[self doOCR_sync:cropedImage];
             [self doOCR_async:cropedImage];
@@ -67,6 +70,7 @@ using namespace cv;
 
 - (void) onSampleChange:(id) sender {
     UIImage *image = nil;
+    self.cancelOCR = YES;
     switch (self.imageSelector.selectedSegmentIndex) {
         case 0:
             image = [UIImage imageNamed:@"testImages/001.png"];
@@ -102,7 +106,7 @@ using namespace cv;
     UIImage *resImg;
     cv::Mat mat = [CVTools cvMatFromUIImage:image];
     
-    std::vector<cv::Rect> letterBBoxes= [CVTools detectLetters:mat];
+    std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
     for(int i=0; i< letterBBoxes.size(); i++){
         cv::rectangle(mat,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
     }
@@ -113,7 +117,7 @@ using namespace cv;
 - (NSMutableArray *) cropLetters:(UIImage *)image {
     NSMutableArray* imgAry = [[NSMutableArray alloc]init];
     cv::Mat mat = [CVTools cvMatFromUIImage:image].clone();
-    std::vector<cv::Rect> letterBBoxes= [CVTools detectLetters:mat];
+    std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
     
     
     cv::Mat image_copy;
@@ -175,7 +179,7 @@ using namespace cv;
     UIImage *bwImage = image;//[image g8_blackAndWhite];
     
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"chi_tra"];
-    operation.tesseract.maximumRecognitionTime = 30.0;
+    operation.tesseract.maximumRecognitionTime = 3.0;
     // operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
     
     operation.delegate = self;
@@ -201,10 +205,33 @@ using namespace cv;
 }
 
 - (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    return NO;
+    return self.cancelOCR;
 }
 
 #pragma mark - openCV
+
+//-(std::vector<cv::Rect>) detectLetters:(cv::Mat)img{
+//    std::vector<cv::Rect> boundRect;
+//    cv::Mat img_gray, img_sobel, img_threshold, element;
+//    cvtColor(img, img_gray, CV_BGR2GRAY);
+//    cv::Sobel(img_gray, img_sobel, CV_8U, 1, 0, 3, 1, 0, cv::BORDER_DEFAULT);
+//    cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
+//    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 3) );
+//    cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
+//    std::vector< std::vector< cv::Point> > contours;
+//    cv::findContours(img_threshold, contours, 0, 1);
+//    std::vector<std::vector<cv::Point> > contours_poly( contours.size() );
+//    for( int i = 0; i < contours.size(); i++ ){
+//        if (contours[i].size()>100)
+//        {
+//            cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
+//            cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
+//            if (appRect.width>appRect.height)
+//                boundRect.push_back(appRect);
+//        }
+//    }
+//    return boundRect;
+//}
 
 -(std::vector<cv::Rect>) detectLetters:(cv::Mat)img{
     std::vector<cv::Rect> boundRect;
@@ -212,13 +239,13 @@ using namespace cv;
     cvtColor(img, img_gray, CV_BGR2GRAY);
     cv::Sobel(img_gray, img_sobel, CV_8U, 1, 0, 3, 1, 0, cv::BORDER_DEFAULT);
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 3) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(23, 2) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     std::vector< std::vector< cv::Point> > contours;
     cv::findContours(img_threshold, contours, 0, 1);
     std::vector<std::vector<cv::Point> > contours_poly( contours.size() );
     for( int i = 0; i < contours.size(); i++ ){
-        if (contours[i].size()>100)
+        if (contours[i].size()>600)
         {
             cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
@@ -228,6 +255,5 @@ using namespace cv;
     }
     return boundRect;
 }
-
 
 @end

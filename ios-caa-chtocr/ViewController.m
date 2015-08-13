@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.operationQueue = [[NSOperationQueue alloc] init];
     
-    UIImage *image = [UIImage imageNamed:@"testImages/003-1.png"];
+    UIImage *image = [UIImage imageNamed:@"testImages/003.png"];
     self.imageView.image = image;
    
     
@@ -35,14 +35,11 @@
     
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"chi_tra"];
     operation.tesseract.maximumRecognitionTime = 30.0;
-    //operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-    //operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
+   // operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
     
     operation.delegate = self;
     operation.tesseract.image = bwImage;
 
-    NSLog(@"operation  out");
-    
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
         NSLog(@"operation  done");
         // Fetch the recognized text

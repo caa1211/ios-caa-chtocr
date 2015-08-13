@@ -1,0 +1,502 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		282E330A647A176DEAE82FEE /* libPods-ios-caa-chtocr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE43E5A5F6AEC434FCD205C3 /* libPods-ios-caa-chtocr.a */; };
+		ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = ADC1DB431B7CF15A00A0D165 /* tessdata */; };
+		ADC1DB461B7CF19000A0D165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC1DB451B7CF19000A0D165 /* AVFoundation.framework */; };
+		ADC1DB491B7CF59F00A0D165 /* testImages in Resources */ = {isa = PBXBuildFile; fileRef = ADC1DB481B7CF59F00A0D165 /* testImages */; };
+		ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA60B1B7CEE5700944FA8 /* main.m */; };
+		ADCAA60F1B7CEE5700944FA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */; };
+		ADCAA6121B7CEE5700944FA8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA6111B7CEE5700944FA8 /* ViewController.m */; };
+		ADCAA6151B7CEE5700944FA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6131B7CEE5700944FA8 /* Main.storyboard */; };
+		ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6161B7CEE5700944FA8 /* Images.xcassets */; };
+		ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */; };
+		ADCAA6261B7CEE5700944FA8 /* ios_caa_chtocrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ADCAA6201B7CEE5700944FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADCAA5FE1B7CEE5700944FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADCAA6051B7CEE5700944FA8;
+			remoteInfo = "ios-caa-chtocr";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		83E056414432CE5856D67BB8 /* Pods-ios-caa-chtocr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-caa-chtocr.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-caa-chtocr/Pods-ios-caa-chtocr.release.xcconfig"; sourceTree = "<group>"; };
+		ADC1DB431B7CF15A00A0D165 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		ADC1DB451B7CF19000A0D165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		ADC1DB481B7CF59F00A0D165 /* testImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testImages; sourceTree = "<group>"; };
+		ADCAA6061B7CEE5700944FA8 /* ios-caa-chtocr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-caa-chtocr.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADCAA60A1B7CEE5700944FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADCAA60B1B7CEE5700944FA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ADCAA60D1B7CEE5700944FA8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ADCAA6101B7CEE5700944FA8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		ADCAA6111B7CEE5700944FA8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		ADCAA6141B7CEE5700944FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ADCAA6161B7CEE5700944FA8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ADCAA6191B7CEE5700944FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		ADCAA61F1B7CEE5700944FA8 /* ios-caa-chtocrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-caa-chtocrTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADCAA6241B7CEE5700944FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ios_caa_chtocrTests.m; sourceTree = "<group>"; };
+		BE43E5A5F6AEC434FCD205C3 /* libPods-ios-caa-chtocr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-caa-chtocr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D07C138B3AF2B32202795D2B /* Pods-ios-caa-chtocr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-caa-chtocr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-caa-chtocr/Pods-ios-caa-chtocr.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ADCAA6031B7CEE5700944FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC1DB461B7CF19000A0D165 /* AVFoundation.framework in Frameworks */,
+				282E330A647A176DEAE82FEE /* libPods-ios-caa-chtocr.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADCAA61C1B7CEE5700944FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8FF8074DF946EF7E80B14C00 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D07C138B3AF2B32202795D2B /* Pods-ios-caa-chtocr.debug.xcconfig */,
+				83E056414432CE5856D67BB8 /* Pods-ios-caa-chtocr.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		ADCAA5FD1B7CEE5700944FA8 = {
+			isa = PBXGroup;
+			children = (
+				ADCAA6081B7CEE5700944FA8 /* ios-caa-chtocr */,
+				ADCAA6221B7CEE5700944FA8 /* ios-caa-chtocrTests */,
+				ADCAA6071B7CEE5700944FA8 /* Products */,
+				8FF8074DF946EF7E80B14C00 /* Pods */,
+				F53DAD2352D8830488C82B44 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		ADCAA6071B7CEE5700944FA8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAA6061B7CEE5700944FA8 /* ios-caa-chtocr.app */,
+				ADCAA61F1B7CEE5700944FA8 /* ios-caa-chtocrTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADCAA6081B7CEE5700944FA8 /* ios-caa-chtocr */ = {
+			isa = PBXGroup;
+			children = (
+				ADC1DB481B7CF59F00A0D165 /* testImages */,
+				ADC1DB431B7CF15A00A0D165 /* tessdata */,
+				ADCAA60D1B7CEE5700944FA8 /* AppDelegate.h */,
+				ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */,
+				ADCAA6101B7CEE5700944FA8 /* ViewController.h */,
+				ADCAA6111B7CEE5700944FA8 /* ViewController.m */,
+				ADCAA6131B7CEE5700944FA8 /* Main.storyboard */,
+				ADCAA6161B7CEE5700944FA8 /* Images.xcassets */,
+				ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */,
+				ADCAA6091B7CEE5700944FA8 /* Supporting Files */,
+			);
+			path = "ios-caa-chtocr";
+			sourceTree = "<group>";
+		};
+		ADCAA6091B7CEE5700944FA8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAA60A1B7CEE5700944FA8 /* Info.plist */,
+				ADCAA60B1B7CEE5700944FA8 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ADCAA6221B7CEE5700944FA8 /* ios-caa-chtocrTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */,
+				ADCAA6231B7CEE5700944FA8 /* Supporting Files */,
+			);
+			path = "ios-caa-chtocrTests";
+			sourceTree = "<group>";
+		};
+		ADCAA6231B7CEE5700944FA8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAA6241B7CEE5700944FA8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F53DAD2352D8830488C82B44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ADC1DB451B7CF19000A0D165 /* AVFoundation.framework */,
+				BE43E5A5F6AEC434FCD205C3 /* libPods-ios-caa-chtocr.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ADCAA6051B7CEE5700944FA8 /* ios-caa-chtocr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADCAA6291B7CEE5700944FA8 /* Build configuration list for PBXNativeTarget "ios-caa-chtocr" */;
+			buildPhases = (
+				74291372DA316D36318C0E39 /* Check Pods Manifest.lock */,
+				ADCAA6021B7CEE5700944FA8 /* Sources */,
+				ADCAA6031B7CEE5700944FA8 /* Frameworks */,
+				ADCAA6041B7CEE5700944FA8 /* Resources */,
+				67F161B4BC9664309CE36955 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ios-caa-chtocr";
+			productName = "ios-caa-chtocr";
+			productReference = ADCAA6061B7CEE5700944FA8 /* ios-caa-chtocr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ADCAA61E1B7CEE5700944FA8 /* ios-caa-chtocrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADCAA62C1B7CEE5700944FA8 /* Build configuration list for PBXNativeTarget "ios-caa-chtocrTests" */;
+			buildPhases = (
+				ADCAA61B1B7CEE5700944FA8 /* Sources */,
+				ADCAA61C1B7CEE5700944FA8 /* Frameworks */,
+				ADCAA61D1B7CEE5700944FA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADCAA6211B7CEE5700944FA8 /* PBXTargetDependency */,
+			);
+			name = "ios-caa-chtocrTests";
+			productName = "ios-caa-chtocrTests";
+			productReference = ADCAA61F1B7CEE5700944FA8 /* ios-caa-chtocrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ADCAA5FE1B7CEE5700944FA8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Carter Chang";
+				TargetAttributes = {
+					ADCAA6051B7CEE5700944FA8 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					ADCAA61E1B7CEE5700944FA8 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = ADCAA6051B7CEE5700944FA8;
+					};
+				};
+			};
+			buildConfigurationList = ADCAA6011B7CEE5700944FA8 /* Build configuration list for PBXProject "ios-caa-chtocr" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ADCAA5FD1B7CEE5700944FA8;
+			productRefGroup = ADCAA6071B7CEE5700944FA8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ADCAA6051B7CEE5700944FA8 /* ios-caa-chtocr */,
+				ADCAA61E1B7CEE5700944FA8 /* ios-caa-chtocrTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ADCAA6041B7CEE5700944FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADCAA6151B7CEE5700944FA8 /* Main.storyboard in Resources */,
+				ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */,
+				ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */,
+				ADC1DB491B7CF59F00A0D165 /* testImages in Resources */,
+				ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADCAA61D1B7CEE5700944FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		67F161B4BC9664309CE36955 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-caa-chtocr/Pods-ios-caa-chtocr-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74291372DA316D36318C0E39 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADCAA6021B7CEE5700944FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADCAA6121B7CEE5700944FA8 /* ViewController.m in Sources */,
+				ADCAA60F1B7CEE5700944FA8 /* AppDelegate.m in Sources */,
+				ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADCAA61B1B7CEE5700944FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADCAA6261B7CEE5700944FA8 /* ios_caa_chtocrTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ADCAA6211B7CEE5700944FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADCAA6051B7CEE5700944FA8 /* ios-caa-chtocr */;
+			targetProxy = ADCAA6201B7CEE5700944FA8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ADCAA6131B7CEE5700944FA8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADCAA6141B7CEE5700944FA8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADCAA6191B7CEE5700944FA8 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ADCAA6271B7CEE5700944FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ADCAA6281B7CEE5700944FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ADCAA62A1B7CEE5700944FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D07C138B3AF2B32202795D2B /* Pods-ios-caa-chtocr.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "ios-caa-chtocr/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ADCAA62B1B7CEE5700944FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83E056414432CE5856D67BB8 /* Pods-ios-caa-chtocr.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "ios-caa-chtocr/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		ADCAA62D1B7CEE5700944FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ios-caa-chtocrTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios-caa-chtocr.app/ios-caa-chtocr";
+			};
+			name = Debug;
+		};
+		ADCAA62E1B7CEE5700944FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ios-caa-chtocrTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios-caa-chtocr.app/ios-caa-chtocr";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADCAA6011B7CEE5700944FA8 /* Build configuration list for PBXProject "ios-caa-chtocr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADCAA6271B7CEE5700944FA8 /* Debug */,
+				ADCAA6281B7CEE5700944FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADCAA6291B7CEE5700944FA8 /* Build configuration list for PBXNativeTarget "ios-caa-chtocr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADCAA62A1B7CEE5700944FA8 /* Debug */,
+				ADCAA62B1B7CEE5700944FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADCAA62C1B7CEE5700944FA8 /* Build configuration list for PBXNativeTarget "ios-caa-chtocrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADCAA62D1B7CEE5700944FA8 /* Debug */,
+				ADCAA62E1B7CEE5700944FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ADCAA5FE1B7CEE5700944FA8 /* Project object */;
+}

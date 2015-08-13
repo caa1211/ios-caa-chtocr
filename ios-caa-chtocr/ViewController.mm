@@ -121,14 +121,19 @@ using namespace cv;
     
     
     cv::Mat image_copy;
-    cvtColor(mat, image_copy, CV_BGRA2BGR);
-    mat = image_copy;
+//    cvtColor(mat, image_copy, CV_BGRA2BGR);
+//    mat = image_copy;
 
 //    bitwise_not(mat, image_copy);
 //    mat = image_copy;
     
 //    cvtColor(mat, image_copy, CV_RGBA2GRAY);
 //    mat = image_copy;
+    
+    // Convert to grayscale.
+//    cv::cvtColor(mat, image_copy, CV_RGB2GRAY);
+//    mat = image_copy;
+
     
     for(int i=0; i< letterBBoxes.size(); i++){
         UIImage *cropedImg;
@@ -176,12 +181,12 @@ using namespace cv;
 - (void) doOCR_async:(UIImage*)image{
     
     // Mark below for avoiding BSXPCMessage error
-    UIImage *bwImage = image;//[image g8_blackAndWhite];
+    UIImage *bwImage = [image g8_blackAndWhite];
     
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"chi_tra"];
     operation.tesseract.maximumRecognitionTime = 3.0;
     // operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-    
+    // operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
     operation.delegate = self;
     operation.tesseract.image = bwImage;
     

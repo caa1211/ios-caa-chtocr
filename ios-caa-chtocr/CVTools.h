@@ -14,4 +14,5 @@ using namespace cv;
 +(std::vector<cv::Rect>) detectLetters:(cv::Mat)img;
 + (UIImage *)UIImageFromCVMat:(cv::Mat)cvMat;
 + (cv::Mat)cvMatFromUIImage:(UIImage *)image;
++ (cv::Mat) perspectiveCorrection:(cv::Mat)mat;
 @end

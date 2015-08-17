@@ -51,13 +51,18 @@ using namespace cv;
 }
 
 -(void) extractTextFromImage:(UIImage*)image {
+    
+    cv::Mat mat = [CVTools cvMatFromUIImage:image];
+    //mat = [CVTools perspectiveCorrection:mat];
+    
     // Draw green text area
-    UIImage *lettersAreaImage = [self drawLettersArea:image];
+    UIImage *lettersAreaImage = [self drawLettersArea:mat.clone()];
+    
     self.imageView.image = lettersAreaImage;
     self.textView.text = @"";
     dispatch_async(self.cropImageQueue, ^{
         // Crop image
-        NSMutableArray *imgAry = [self cropLetters:image];
+        NSMutableArray *imgAry = [self cropLetters:mat];
         NSLog(@"===========%ld================", imgAry.count);
         self.cancelOCR = NO;
         for (UIImage *cropedImage in imgAry) {
@@ -102,10 +107,9 @@ using namespace cv;
     
 }
 
-- (UIImage *) drawLettersArea:(UIImage *)image {
+- (UIImage *) drawLettersArea:(cv::Mat)mat {
     UIImage *resImg;
-    cv::Mat mat = [CVTools cvMatFromUIImage:image];
-    
+
     std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
     for(int i=0; i< letterBBoxes.size(); i++){
         cv::rectangle(mat,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
@@ -114,9 +118,13 @@ using namespace cv;
     return resImg;
 }
 
-- (NSMutableArray *) cropLetters:(UIImage *)image {
+
+
+
+
+- (NSMutableArray *) cropLetters:(cv::Mat)mat {
     NSMutableArray* imgAry = [[NSMutableArray alloc]init];
-    cv::Mat mat = [CVTools cvMatFromUIImage:image].clone();
+    
     std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
     
     
@@ -142,7 +150,9 @@ using namespace cv;
         cv::Mat cropped;
         croppedRef.copyTo(cropped);
         cv::Mat cmat = cropped;
+        
         cropedImg = [CVTools UIImageFromCVMat:cmat];
+        
         [imgAry addObject:cropedImg];
     }
     return imgAry;
@@ -206,7 +216,7 @@ using namespace cv;
 }
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
 }
 
 - (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {

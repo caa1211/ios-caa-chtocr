@@ -45,7 +45,8 @@ using namespace cv;
     self.textView.attributedText = [[NSAttributedString alloc] initWithString:@" " attributes:ats];
     
     // Default target image
-    [self extractTextFromImage:[UIImage imageNamed:@"testImages/003-1.png"]];
+    //[self extractTextFromImage:[UIImage imageNamed:@"testImages/003-1.png"]];
+    [self extractTextFromImage:[UIImage imageNamed:@"testImages/010.jpg"]];
     
     self.cancelOCR = NO;
 }

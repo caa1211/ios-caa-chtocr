@@ -43,7 +43,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _sourceImage = [UIImage imageNamed:@"testImages/003.png"];
+    _sourceImage = [UIImage imageNamed:@"testImages/018.jpg"];
     
     _sourceImage = [self unifyImage:_sourceImage];
     
@@ -60,7 +60,7 @@
         [_labelBoundsArray_screen addObject:NSStringFromCGRect(rect)];
         
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];
-        rectangle.alpha = 0.5;
+        rectangle.alpha = 0.3;
         rectangle.backgroundColor = [UIColor redColor];
         [self.ocrImageView addSubview:rectangle];
     }

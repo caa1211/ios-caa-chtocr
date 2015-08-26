@@ -29,11 +29,20 @@
 
 #define MaxDimension 800
 
+- (id)initWithImage:(UIImage *)image {
+    self = [super init];
+    if (self) {
+        _sourceImage = image;
+    }
+    
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
     self.ocrImageView.alignTop = YES;
+    self.ocrImageView.alignLeft = YES;
     self.ocr = [[YOCREngine alloc]init];
     self.ocr.delegate = self;
     
@@ -44,8 +53,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _sourceImage = [UIImage imageNamed:@"testImages/018.jpg"];
-    
+
     _sourceImage = [self unifyImage:_sourceImage];
     
     self.ocrImageView.image = _sourceImage;
@@ -57,13 +65,14 @@
     for (NSString * boundString in _labelBoundsArray_image) {
         CGRect rect = CGRectFromString(boundString);
         rect = [self coordinatesImageToScreen:rect byImage: _sourceImage];
+        // rect = [self.ocrImageView convertRect:rect toView:self.drawView];
         
         [_labelBoundsArray_screen addObject:NSStringFromCGRect(rect)];
         
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];
         rectangle.alpha = 0.3;
         rectangle.backgroundColor = [UIColor redColor];
-        [self.ocrImageView addSubview:rectangle];
+        [self.ocrWrapperView addSubview:rectangle];
     }
 }
 
@@ -141,14 +150,16 @@
 }
 
 - (CGRect) coordinatesImageToScreen:(CGRect)sourceRect byImage:(UIImage *) image {
-    NSInteger w = image.size.width;
-    CGFloat scale = w /  self.ocrImageView.frame.size.width;
+    CGFloat scaleW = image.size.width /  self.ocrImageView.frame.size.width;
+    CGFloat scaleH = image.size.height /  self.ocrImageView.frame.size.height;
+    CGFloat scale = MAX(scaleW, scaleH);
     return CGRectMake(sourceRect.origin.x/scale, sourceRect.origin.y/scale, sourceRect.size.width/scale,sourceRect.size.height/scale);
 }
 
 - (CGRect) coordinatesScreenToImage:(CGRect)sourceRect byImage:(UIImage *) image {
-    NSInteger w = image.size.width;
-    CGFloat scale = w /  self.ocrImageView.frame.size.width;
+    CGFloat scaleW = image.size.width /  self.ocrImageView.frame.size.width;
+    CGFloat scaleH = image.size.height /  self.ocrImageView.frame.size.height;
+    CGFloat scale = MAX(scaleW, scaleH);
     return CGRectMake(sourceRect.origin.x*scale, sourceRect.origin.y*scale, sourceRect.size.width*scale,sourceRect.size.height*scale);
 }
 
@@ -169,6 +180,7 @@
 #pragma mark - OCR delegate
 
 -(void) startOCR {
+    self.debugLabel.text = @"";
 }
 -(void) progressOCR:(NSInteger)progress{
     NSLog(@"=========progress %ld==================", progress);

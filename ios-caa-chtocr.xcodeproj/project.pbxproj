@@ -33,6 +33,8 @@
 		ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6161B7CEE5700944FA8 /* Images.xcassets */; };
 		ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */; };
 		ADCAA6261B7CEE5700944FA8 /* ios_caa_chtocrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */; };
+		ADF452731B8E658900E6903D /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF452711B8E658900E6903D /* ImagePickerViewController.m */; };
+		ADF452741B8E658900E6903D /* ImagePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADF452721B8E658900E6903D /* ImagePickerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,9 @@
 		ADCAA61F1B7CEE5700944FA8 /* ios-caa-chtocrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-caa-chtocrTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAA6241B7CEE5700944FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ios_caa_chtocrTests.m; sourceTree = "<group>"; };
+		ADF452701B8E658900E6903D /* ImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerViewController.h; sourceTree = "<group>"; };
+		ADF452711B8E658900E6903D /* ImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerViewController.m; sourceTree = "<group>"; };
+		ADF452721B8E658900E6903D /* ImagePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerViewController.xib; sourceTree = "<group>"; };
 		BE43E5A5F6AEC434FCD205C3 /* libPods-ios-caa-chtocr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-caa-chtocr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D07C138B3AF2B32202795D2B /* Pods-ios-caa-chtocr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-caa-chtocr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-caa-chtocr/Pods-ios-caa-chtocr.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +142,9 @@
 				AD82DEB21B8E202D0056DE50 /* OCRViewController.h */,
 				AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */,
 				AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */,
+				ADF452701B8E658900E6903D /* ImagePickerViewController.h */,
+				ADF452711B8E658900E6903D /* ImagePickerViewController.m */,
+				ADF452721B8E658900E6903D /* ImagePickerViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -323,6 +331,7 @@
 				ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */,
 				ADC1DB491B7CF59F00A0D165 /* testImages in Resources */,
 				AD82DEB01B8E1F120056DE50 /* TestViewController.xib in Resources */,
+				ADF452741B8E658900E6903D /* ImagePickerViewController.xib in Resources */,
 				ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +391,7 @@
 				AD82DEAB1B8E1E990056DE50 /* TestViewController.mm in Sources */,
 				AD82DEB91B8E24220056DE50 /* ImageTools.m in Sources */,
 				ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */,
+				ADF452731B8E658900E6903D /* ImagePickerViewController.m in Sources */,
 				AD82DEAE1B8E1EB90056DE50 /* UIImageViewAligned.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

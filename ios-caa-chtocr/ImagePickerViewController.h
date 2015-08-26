@@ -1,5 +1,5 @@
 //
-//  OCRViewController.h
+//  ImagePickerViewController.h
 //  ios-caa-chtocr
 //
 //  Created by Carter Chang on 8/27/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OCRViewController : UIViewController
-- (id)initWithImage:(UIImage *)image;
+@interface ImagePickerViewController : UIViewController
+
 @end

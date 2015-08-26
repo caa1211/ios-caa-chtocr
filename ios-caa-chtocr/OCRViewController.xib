@@ -23,13 +23,13 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JaV-tj-Wyc" customClass="UIImageViewAligned">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="408"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="backgroundColor" red="0.18823529410000001" green="0.82745098039999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jIF-nN-IXm" userLabel="drawView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="408"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.31718291479999999" green="0.73208986539999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="JaV-tj-Wyc" firstAttribute="top" secondItem="XrM-Li-Ili" secondAttribute="top" id="0s9-nQ-eD6"/>
                         <constraint firstAttribute="bottom" secondItem="JaV-tj-Wyc" secondAttribute="bottom" id="6LK-hp-b9A"/>

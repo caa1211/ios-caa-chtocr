@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "OCRViewController.h"
-
+#import "ImagePickerViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -16,10 +16,14 @@
 @implementation AppDelegate
 
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[OCRViewController alloc]init]];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ImagePickerViewController alloc]init]];
+    
+    //self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[OCRViewController alloc]initWithImage:[UIImage imageNamed:@"testImages/018.jpg"]]];
+    
     [self.window makeKeyAndVisible];
     
     return YES;

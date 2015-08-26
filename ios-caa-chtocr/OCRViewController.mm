@@ -106,7 +106,7 @@
     UIGraphicsBeginImageContext(self.drawView.frame.size);
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 18.0);
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.6, 0.6, 0.7, 0.6);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.5, 0.5, 0.7, 0.6);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
     CGContextStrokePath(UIGraphicsGetCurrentContext());

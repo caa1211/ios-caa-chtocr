@@ -84,9 +84,9 @@
 //            [NSThread sleepForTimeInterval:1.0f];
 //        }
         
-        if ([self.ocr testOCRThreshold:cropedImage]){
-            [self.ocr ocrWithImage:cropedImage];
-        }
+//        if ([self.ocr testOCRThreshold:cropedImage]){
+//            [self.ocr ocrWithImage:cropedImage];
+//        }
         
     }];
 

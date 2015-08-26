@@ -36,4 +36,5 @@
 -(std::vector<cv::Rect>) detectLetters:(cv::Mat)img;
 -(void)ocrWithImage:(UIImage*)image;
 -(NSDictionary *) testOCRThreshold:(UIImage*)image;
+-(NSMutableArray *) getLabelBounds:(UIImage *)image;
 @end

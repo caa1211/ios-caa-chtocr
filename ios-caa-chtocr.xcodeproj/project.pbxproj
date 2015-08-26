@@ -12,6 +12,9 @@
 		AD82DEAB1B8E1E990056DE50 /* TestViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */; };
 		AD82DEAE1B8E1EB90056DE50 /* UIImageViewAligned.m in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEAD1B8E1EB90056DE50 /* UIImageViewAligned.m */; };
 		AD82DEB01B8E1F120056DE50 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */; };
+		AD82DEB51B8E202D0056DE50 /* OCRViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */; };
+		AD82DEB61B8E202D0056DE50 /* OCRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */; };
+		AD82DEB91B8E24220056DE50 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEB81B8E24220056DE50 /* ImageTools.m */; };
 		ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = ADC1DB431B7CF15A00A0D165 /* tessdata */; };
 		ADC1DB461B7CF19000A0D165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC1DB451B7CF19000A0D165 /* AVFoundation.framework */; };
 		ADC1DB491B7CF59F00A0D165 /* testImages in Resources */ = {isa = PBXBuildFile; fileRef = ADC1DB481B7CF59F00A0D165 /* testImages */; };
@@ -51,6 +54,11 @@
 		AD82DEAC1B8E1EB90056DE50 /* UIImageViewAligned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewAligned.h; sourceTree = "<group>"; };
 		AD82DEAD1B8E1EB90056DE50 /* UIImageViewAligned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewAligned.m; sourceTree = "<group>"; };
 		AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
+		AD82DEB21B8E202D0056DE50 /* OCRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCRViewController.h; sourceTree = "<group>"; };
+		AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCRViewController.mm; sourceTree = "<group>"; };
+		AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OCRViewController.xib; sourceTree = "<group>"; };
+		AD82DEB71B8E24220056DE50 /* ImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTools.h; sourceTree = "<group>"; };
+		AD82DEB81B8E24220056DE50 /* ImageTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTools.m; sourceTree = "<group>"; };
 		ADC1DB431B7CF15A00A0D165 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		ADC1DB451B7CF19000A0D165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ADC1DB481B7CF59F00A0D165 /* testImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testImages; sourceTree = "<group>"; };
@@ -126,6 +134,9 @@
 				AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */,
 				AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */,
 				ADCAA6111B7CEE5700944FA8 /* ViewController.mm */,
+				AD82DEB21B8E202D0056DE50 /* OCRViewController.h */,
+				AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */,
+				AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -134,11 +145,13 @@
 			isa = PBXGroup;
 			children = (
 				AD82DEA61B8E1E710056DE50 /* YOCREngine.h */,
+				AD82DEA71B8E1E710056DE50 /* YOCREngine.mm */,
 				AD82DEAC1B8E1EB90056DE50 /* UIImageViewAligned.h */,
 				AD82DEAD1B8E1EB90056DE50 /* UIImageViewAligned.m */,
-				AD82DEA71B8E1E710056DE50 /* YOCREngine.mm */,
 				ADC1DB5C1B7D01F100A0D165 /* CVTools.h */,
 				ADC1DB5D1B7D01F100A0D165 /* CVTools.mm */,
+				AD82DEB71B8E24220056DE50 /* ImageTools.h */,
+				AD82DEB81B8E24220056DE50 /* ImageTools.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -306,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */,
+				AD82DEB61B8E202D0056DE50 /* OCRViewController.xib in Resources */,
 				ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */,
 				ADC1DB491B7CF59F00A0D165 /* testImages in Resources */,
 				AD82DEB01B8E1F120056DE50 /* TestViewController.xib in Resources */,
@@ -361,10 +375,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADC1DB5E1B7D01F100A0D165 /* CVTools.mm in Sources */,
+				AD82DEB51B8E202D0056DE50 /* OCRViewController.mm in Sources */,
 				ADCAA6121B7CEE5700944FA8 /* ViewController.mm in Sources */,
 				AD82DEA81B8E1E710056DE50 /* YOCREngine.mm in Sources */,
 				ADCAA60F1B7CEE5700944FA8 /* AppDelegate.m in Sources */,
 				AD82DEAB1B8E1E990056DE50 /* TestViewController.mm in Sources */,
+				AD82DEB91B8E24220056DE50 /* ImageTools.m in Sources */,
 				ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */,
 				AD82DEAE1B8E1EB90056DE50 /* UIImageViewAligned.m in Sources */,
 			);

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "TestViewController.h"
+#import "OCRViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[TestViewController alloc]init]];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[OCRViewController alloc]init]];
     [self.window makeKeyAndVisible];
     
     return YES;

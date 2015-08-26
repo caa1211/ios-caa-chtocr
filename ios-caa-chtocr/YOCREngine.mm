@@ -20,8 +20,6 @@
 
 using namespace cv;
 
-#define OCRLabelThreshold 8
-
 @implementation YOCREngine
 
 -(id) init {
@@ -91,10 +89,26 @@ struct pixel {
 }
 
 
+- (NSMutableArray *) getLabelBounds:(UIImage *)image {
+    cv::Mat mat = [CVTools cvMatFromUIImage:image];
+    std::vector<cv::Rect> bounds = [self detectLetters:mat];
+    NSMutableArray * boundsArray = [[NSMutableArray alloc] init];
+    if (bounds.size() > 0){
+        for(int i=0; i< bounds.size(); i++){
+            CGRect rect = CGRectMake(bounds[i].x, bounds[i].y, bounds[i].width, bounds[i].height);
+            [boundsArray addObject:NSStringFromCGRect(rect)];
+        }
+        
+        return boundsArray;
+    }else {
+        return nil;
+    }
+}
+
 -(NSDictionary *) testOCRThreshold:(UIImage*)image {
     cv::Mat mat = [CVTools cvMatFromUIImage:image];
     std::vector<cv::Rect> bounds = [self detectLetters:mat];
-    if (bounds.size() < OCRLabelThreshold && bounds.size() > 0){
+    if ( bounds.size() > 0){
         
         cv::Mat wmat = [self lettersFromImage:mat letterBoxes:bounds customColor:[UIColor whiteColor]];
         //
@@ -110,6 +124,7 @@ struct pixel {
         return nil;
     }
 }
+
 
 
 -(UIImage *)changeWhiteColorTransparent: (UIImage *)image
@@ -145,7 +160,7 @@ struct pixel {
         
         std::vector<cv::Rect> bounds = [self detectLetters:mat];
         
-        if (bounds.size() < OCRLabelThreshold && bounds.size() > 0){
+        if (bounds.size() > 0){
             [self.delegate passOCRThreshold:bounds.size()];
             
             [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrResult, UIImage *image) {
@@ -243,10 +258,10 @@ struct pixel {
         
         Mat imgPanelRoi(wmat, rect);
         cmat.copyTo(imgPanelRoi);
-       
-//        if (isDrawBorder && cmat.data !=NULL && wmat.data !=NULL && wmat.rows!= 0 && rect.width != 0) {
-//            cv::rectangle(wmat,rect,cv::Scalar(250,250,250),2,16,0);
-//        }
+        
+        if (isDrawBorder && cmat.data !=NULL && wmat.data !=NULL && wmat.rows!= 0 && rect.width != 0) {
+            cv::rectangle(wmat,rect,cv::Scalar(250,250,250),2,16,0);
+        }
     }
     return wmat;
     
@@ -323,30 +338,30 @@ CGSize maxSize = CGSizeMake(0, 0);
 -(void)applyDetectRule:(cv::Rect)rect rectPool:(std::vector<cv::Rect>*)rectPool {
     
     
-     /*
-      if (
-      rect.width > rect.height
-      && rect.height > 30
-      && rect.height < 180
-      && rect.width > 100
-      && rect.width < 760
-      && rect.width / rect.height > 2
-      && rect.width / rect.height < 15
-      && rect.width / rect.height < 180
-      && rect.y < 300
-      && rect.size().width > maxSize.width
-      )
+    /*
+     if (
+     rect.width > rect.height
+     && rect.height > 30
+     && rect.height < 180
+     && rect.width > 100
+     && rect.width < 760
+     && rect.width / rect.height > 2
+     && rect.width / rect.height < 15
+     && rect.width / rect.height < 180
+     && rect.y < 300
+     && rect.size().width > maxSize.width
+     )
      */
     
     if (
         rect.width > rect.height
-        && rect.height > 30
-        && rect.height < 300
-        && rect.width > 100
-        && rect.width < 780
-        && rect.width / rect.height > 2
-        && rect.width / rect.height < 15
-        && rect.size().width > maxSize.width
+//        && rect.height > 30
+//        && rect.height < 300
+//        && rect.width > 100
+//        && rect.width < 780
+//        && rect.width / rect.height > 2
+//        && rect.width / rect.height < 15
+//        && rect.size().width > maxSize.width
         ){
         rectPool->push_back(rect);
     }
@@ -356,12 +371,11 @@ CGSize maxSize = CGSizeMake(0, 0);
     std::vector<cv::Rect> boundRect;
     cv::Mat img_gray, img_sobel, img_threshold, element;
     cvtColor(img, img_gray, CV_BGR2GRAY);
-    cv::Sobel(img_gray, img_sobel, CV_8U, 2, 0, 3, 1, 0, cv::BORDER_DEFAULT);
-    
+    cv::Sobel(img_gray, img_sobel, CV_8U, 1, 0, 3, 1, 0, cv::BORDER_DEFAULT);
+
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(30, 5) );
-    
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 3) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];
@@ -369,19 +383,24 @@ CGSize maxSize = CGSizeMake(0, 0);
     std::vector< std::vector< cv::Point> > contours;
     cv::findContours(img_threshold, contours, 0, 1);
     std::vector<std::vector<cv::Point> > contours_poly( contours.size() );
-    //NSLog(@"contours.size() %ld", contours.size());
-    int count = 0;
+
     for( int i = 0; i < contours.size(); i++ ){
-        
-        if (contours[i].size() > 400)
+     
+        if (contours[i].size() > 160)
         {
-            count++;
-            cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 10, true );
+            NSLog(@"=========contours[i].size() %d==================", contours[i].size());
+          
+            cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
             
-            //labelThreshold
-            [self applyDetectRule:appRect rectPool:&boundRect];
             
+            if (appRect.width > appRect.height){
+                boundRect.push_back(appRect);
+            }
+
+                
+            //labelThreshold
+            //[self applyDetectRule:appRect rectPool:&boundRect];
         }
     }
     //NSLog(@"contours[i].size() > 400,  %ld", count);

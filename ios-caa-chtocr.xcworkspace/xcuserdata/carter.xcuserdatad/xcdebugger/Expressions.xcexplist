@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[OCRViewController transformationCoordinates:byImage:]:OCRViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.ocrImageView.frame.size.width">
+            </PersistentString>
+            <PersistentString
+               value = "self.ocrImageView.frame">
+            </PersistentString>
+            <PersistentString
+               value = "image.size">
+            </PersistentString>
+            <PersistentString
+               value = "self.ocrImageView.bounds.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[OCRViewController viewDidLoad]:OCRViewController.mm">
+      </ContextState>
+      <ContextState
+         contextName = "-[YOCREngine getLabelBounds:]:YOCREngine.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

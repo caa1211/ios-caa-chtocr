@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIImage* sourceImage;
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 
 @end
 
@@ -49,6 +50,11 @@
     _labelBoundsArray_image = [[NSMutableArray alloc] init];
     _labelBoundsArray_screen = [[NSMutableArray alloc] init];
     _selectLabelBounds = [[NSMutableArray alloc] init];
+}
+
+-(void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    _sourceImage = nil;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -93,9 +99,7 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint pointNext = [touch locationInView:self.ocrWrapperView];
-    NSLog(@"========x %f==========y %f=========", pointNext.x, pointNext.y);
-    NSLog(@"========bounds %@=========", NSStringFromCGRect(self.ocrWrapperView.bounds));
-     NSLog(@"=============", pointNext.x, pointNext.y);
+
     if(![self isPoint:pointNext insideOfRect:self.ocrWrapperView.bounds] ) {
         return;
     }
@@ -110,7 +114,12 @@
     UIGraphicsEndImageContext();
     _pointCurrent = pointNext;
     
-    [self checkPointInLabelBounds:_pointCurrent];
+    CGPoint brushT = pointNext;
+    brushT.y = brushT.y + 6;
+    CGPoint brushB = pointNext;
+    brushB.y = brushT.y - 6;
+    [self checkPointInLabelBounds:brushT];
+    [self checkPointInLabelBounds:brushB];
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -180,10 +189,12 @@
 #pragma mark - OCR delegate
 
 -(void) startOCR {
+    self.progressView.progress = 0;
     self.debugLabel.text = @"";
 }
 -(void) progressOCR:(NSInteger)progress{
-    NSLog(@"=========progress %ld==================", progress);
+   NSLog(@"=========progress %ld==================", progress);
+   self.progressView.progress = (float)progress/100;
 }
 -(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image{
     NSString *combinedStr = @"";
@@ -193,10 +204,12 @@
         }
     }
     self.debugLabel.text = combinedStr;
+    self.progressView.progress = 1;
 }
 
 -(void) failedOCR: (OCRERRROR)errorCode {
     self.debugLabel.text = @"[no drawn bounds]";
+    self.progressView.progress = 0;
 }
 
 

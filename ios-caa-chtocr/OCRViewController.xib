@@ -10,6 +10,7 @@
                 <outlet property="drawView" destination="jIF-nN-IXm" id="hOH-dN-KXb"/>
                 <outlet property="ocrImageView" destination="JaV-tj-Wyc" id="h43-cm-KE6"/>
                 <outlet property="ocrWrapperView" destination="XrM-Li-Ili" id="BTl-jv-Zk7"/>
+                <outlet property="progressView" destination="yl8-lw-Ybn" id="YA0-Ws-Q3J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -47,6 +48,12 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yl8-lw-Ybn">
+                    <rect key="frame" x="85" y="504" width="150" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="Pat-EP-phf"/>
+                    </constraints>
+                </progressView>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
@@ -57,7 +64,9 @@
                 <constraint firstAttribute="centerX" secondItem="xaw-qj-0bB" secondAttribute="centerX" id="L4W-Ya-Sut"/>
                 <constraint firstAttribute="trailing" secondItem="XrM-Li-Ili" secondAttribute="trailing" id="QKP-5J-VeR"/>
                 <constraint firstItem="XrM-Li-Ili" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UZu-Zm-MSN"/>
+                <constraint firstAttribute="centerX" secondItem="yl8-lw-Ybn" secondAttribute="centerX" id="VWf-Uq-5mZ"/>
                 <constraint firstAttribute="trailing" secondItem="xaw-qj-0bB" secondAttribute="trailing" id="dV5-9i-x9G"/>
+                <constraint firstItem="yl8-lw-Ybn" firstAttribute="top" secondItem="XrM-Li-Ili" secondAttribute="bottom" constant="16" id="dgh-2M-LGO"/>
                 <constraint firstItem="xaw-qj-0bB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qbG-L7-w7F"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

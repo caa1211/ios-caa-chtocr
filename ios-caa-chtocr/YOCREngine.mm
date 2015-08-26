@@ -391,7 +391,7 @@ CGSize maxSize = CGSizeMake(0, 0);
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 3) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(20, 3) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];

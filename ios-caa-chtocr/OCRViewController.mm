@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *selectLabelBounds;
 @property (strong, nonatomic) UIImage* sourceImage;
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
+@property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 
 @end
 
@@ -74,7 +75,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-    _pointCurrent = [touch locationInView:self.view];
+    _pointCurrent = [touch locationInView:self.ocrWrapperView];
     self.drawView.image = [[UIImage alloc] init];
     [_selectLabelBounds removeAllObjects];
 }
@@ -82,7 +83,13 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-    CGPoint pointNext = [touch locationInView:self.view];
+    CGPoint pointNext = [touch locationInView:self.ocrWrapperView];
+    NSLog(@"========x %f==========y %f=========", pointNext.x, pointNext.y);
+    NSLog(@"========bounds %@=========", NSStringFromCGRect(self.ocrWrapperView.bounds));
+     NSLog(@"=============", pointNext.x, pointNext.y);
+    if(![self isPoint:pointNext insideOfRect:self.ocrWrapperView.bounds] ) {
+        return;
+    }
     UIGraphicsBeginImageContext(self.drawView.frame.size);
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 18.0);
@@ -95,7 +102,6 @@
     _pointCurrent = pointNext;
     
     [self checkPointInLabelBounds:_pointCurrent];
-    
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -165,7 +171,7 @@
 -(void) startOCR {
 }
 -(void) progressOCR:(NSInteger)progress{
-    NSLog(@"=========progress %f==================", progress);
+    NSLog(@"=========progress %ld==================", progress);
 }
 -(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image{
     NSString *combinedStr = @"";

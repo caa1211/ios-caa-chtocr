@@ -11,17 +11,19 @@
 #import <opencv2/videoio/cap_ios.h>
 #import "CVTools.h"
 
+
+typedef enum OCRERRROR : NSInteger {
+    OCRERRROR_NOBOUNDS = 0
+}OCRERRROR;
+
+
 @protocol YOCREngineDelegate <NSObject>
 
 -(void) startOCR;
 -(void) progressOCR:(NSInteger)progress;
 -(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image;
--(void) passOCRThreshold:(NSInteger)number;
--(void) failOCRThreshold:(NSInteger)number;
+-(void) failedOCR: (OCRERRROR)errorCode;
 -(void) cancelledOCR;
-
--(void) ocrLabelCropped: (UIImage*)image;
--(void) ocrDebugImage: (UIImage*)image;
 
 @end
 
@@ -31,10 +33,6 @@
 @property(assign, nonatomic) bool cancelOCR;
 @property(assign, atomic) bool isOCRing;
 
--(void) extractTextFromImage:(UIImage*)image complete:(void(^)(UIImage *))complete;
--(void) extractTextFromCVImage:(cv::Mat)mat letterBoxes:(std::vector<cv::Rect>)letterBoxes complete:(void(^)(NSString *result, UIImage *image))complete;
--(std::vector<cv::Rect>) detectLetters:(cv::Mat)img;
--(void)ocrWithImage:(UIImage*)image;
--(NSDictionary *) testOCRThreshold:(UIImage*)image;
 -(NSMutableArray *) getLabelBounds:(UIImage *)image;
+-(void) ocrWithImage:(UIImage *)image inBounds:(NSMutableArray*)boundsArray;
 @end

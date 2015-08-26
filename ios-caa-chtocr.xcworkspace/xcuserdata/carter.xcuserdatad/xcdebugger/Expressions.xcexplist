@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[YOCREngine getLabelBounds:]:YOCREngine.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[OCRViewController viewDidLoad]:OCRViewController.mm">
+      </ContextState>
+      <ContextState
          contextName = "-[OCRViewController transformationCoordinates:byImage:]:OCRViewController.mm">
          <PersistentStrings>
             <PersistentString
@@ -20,13 +31,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[OCRViewController viewDidLoad]:OCRViewController.mm">
-      </ContextState>
-      <ContextState
-         contextName = "-[YOCREngine getLabelBounds:]:YOCREngine.mm">
+         contextName = "-[OCRViewController touchesEnded:withEvent:]:OCRViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "image.size">
+               value = "_selectLabelBounds">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

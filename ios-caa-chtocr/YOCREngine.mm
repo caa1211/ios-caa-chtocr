@@ -17,7 +17,6 @@
 @property(strong, nonatomic) G8Tesseract *tesseract;
 @end
 
-
 using namespace cv;
 
 @implementation YOCREngine
@@ -105,27 +104,6 @@ struct pixel {
     }
 }
 
--(NSDictionary *) testOCRThreshold:(UIImage*)image {
-    cv::Mat mat = [CVTools cvMatFromUIImage:image];
-    std::vector<cv::Rect> bounds = [self detectLetters:mat];
-    if ( bounds.size() > 0){
-        
-        cv::Mat wmat = [self lettersFromImage:mat letterBoxes:bounds customColor:[UIColor whiteColor]];
-        //
-        //        double alpha = 0.1; double beta;
-        //        Mat dst;
-        //        beta = ( 1.0 - alpha );
-        //        addWeighted( mat, alpha, wmat, beta, 0.0, dst);
-        //
-        
-        UIImage *whiteImage = [self changeWhiteColorTransparent:[CVTools UIImageFromCVMat:wmat]];
-        return @{@"image":whiteImage, @"boundsSize": @(bounds.size())};
-    }else {
-        return nil;
-    }
-}
-
-
 
 -(UIImage *)changeWhiteColorTransparent: (UIImage *)image
 {
@@ -161,8 +139,7 @@ struct pixel {
         std::vector<cv::Rect> bounds = [self detectLetters:mat];
         
         if (bounds.size() > 0){
-            [self.delegate passOCRThreshold:bounds.size()];
-            
+
             [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrResult, UIImage *image) {
                 //background thread
                 
@@ -179,10 +156,53 @@ struct pixel {
             }];
             
         }else {
-            [self.delegate failOCRThreshold:bounds.size()];
             self.isOCRing = NO;
         }
     });
+}
+
+-(void) ocrWithImage:(UIImage *)image inBounds:(NSMutableArray*)boundsArray{
+    [self.delegate startOCR];
+    self.isOCRing = YES;
+    self.cancelOCR = NO;
+    
+    dispatch_async(self.cropImageQueue, ^{
+        cv::Mat mat = [CVTools cvMatFromUIImage:image];
+        std::vector<cv::Rect> bounds = [self bounsArrayToVectors:boundsArray];
+        if (bounds.size() > 0){
+
+            [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrResult, UIImage *image) {
+                //background thread
+                
+                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@",=-)(*&^%$#@!~}{?></:.;\"\'`ˉ"];
+                NSString *clearOcrResult = [[ocrResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
+                NSArray *subStrings = [clearOcrResult componentsSeparatedByCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"\n"]];
+                
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [self.delegate finishOCR:subStrings image:image];
+                    self.isOCRing = NO;
+                });
+                
+            }];
+        }else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self.delegate failedOCR:OCRERRROR_NOBOUNDS];
+                self.isOCRing = NO;
+            });
+        }
+
+    });
+    
+}
+
+-(std::vector<cv::Rect>) bounsArrayToVectors:(NSMutableArray*)boundsArray{
+    std::vector<cv::Rect> boundRects;
+    for (NSString * boundString in boundsArray) {
+        CGRect rect = CGRectFromString(boundString);
+        cv::Rect appRect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+        boundRects.push_back(appRect);
+    }
+    return boundRects;
 }
 
 
@@ -208,10 +228,6 @@ struct pixel {
     
     
     UIImage *whiteImage = [CVTools UIImageFromCVMat:wmat];
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [self.delegate ocrLabelCropped:whiteImage];
-    });
     
     NSString *ocrResult = [self doOCR_sync:whiteImage];
     
@@ -386,7 +402,7 @@ CGSize maxSize = CGSizeMake(0, 0);
 
     for( int i = 0; i < contours.size(); i++ ){
      
-        if (contours[i].size() > 160)
+        if (contours[i].size() > 80)
         {
             NSLog(@"=========contours[i].size() %d==================", contours[i].size());
           

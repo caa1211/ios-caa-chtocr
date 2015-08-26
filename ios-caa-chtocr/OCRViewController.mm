@@ -12,9 +12,16 @@
 #import "ImageTools.h"
 
 @interface OCRViewController () <YOCREngineDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *debugImageView;
 @property (weak, nonatomic) IBOutlet UIImageViewAligned *ocrImageView;
 @property (strong, nonatomic) YOCREngine *ocr;
+@property (weak, nonatomic) IBOutlet UIImageView *drawView;
+@property (assign, nonatomic) CGPoint pointCurrent;
+@property (strong, nonatomic) NSMutableArray *labelBoundsArray_image;
+@property (strong, nonatomic) NSMutableArray *labelBoundsArray_screen;
+@property (strong, nonatomic) NSMutableArray *selectLabelBounds;
+@property (strong, nonatomic) UIImage* sourceImage;
+@property (weak, nonatomic) IBOutlet UILabel *debugLabel;
+
 @end
 
 @implementation OCRViewController
@@ -29,21 +36,28 @@
     self.ocr = [[YOCREngine alloc]init];
     self.ocr.delegate = self;
     
+    _labelBoundsArray_image = [[NSMutableArray alloc] init];
+    _labelBoundsArray_screen = [[NSMutableArray alloc] init];
+    _selectLabelBounds = [[NSMutableArray alloc] init];
 }
 
-
--(void) viewDidLayoutSubviews{
- 
-    UIImage* sourceImage = [UIImage imageNamed:@"testImages/027.jpg"];
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    _sourceImage = [UIImage imageNamed:@"testImages/003.png"];
     
-    sourceImage = [self unifyImage:sourceImage];
-    self.ocrImageView.image = sourceImage;
+    _sourceImage = [self unifyImage:_sourceImage];
     
-    NSMutableArray *boundsArray = [self.ocr getLabelBounds:sourceImage];
+    self.ocrImageView.image = _sourceImage;
     
-    for (NSString * boundString in boundsArray) {
+    _labelBoundsArray_image = [self.ocr getLabelBounds:_sourceImage];
+    [_labelBoundsArray_screen removeAllObjects];
+    [_selectLabelBounds removeAllObjects];
+    
+    for (NSString * boundString in _labelBoundsArray_image) {
         CGRect rect = CGRectFromString(boundString);
-        rect = [self coordinatesImageToScreen:rect byImage: sourceImage];
+        rect = [self coordinatesImageToScreen:rect byImage: _sourceImage];
+        
+        [_labelBoundsArray_screen addObject:NSStringFromCGRect(rect)];
         
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];
         rectangle.alpha = 0.5;
@@ -52,18 +66,84 @@
     }
 }
 
+
+-(void) viewDidLayoutSubviews{
+ 
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    _pointCurrent = [touch locationInView:self.view];
+    self.drawView.image = [[UIImage alloc] init];
+    [_selectLabelBounds removeAllObjects];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint pointNext = [touch locationInView:self.view];
+    UIGraphicsBeginImageContext(self.drawView.frame.size);
+    [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 18.0);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.6, 0.6, 0.7, 0.6);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    self.drawView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _pointCurrent = pointNext;
+    
+    [self checkPointInLabelBounds:_pointCurrent];
+    
+}
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [_ocr ocrWithImage:_sourceImage inBounds:_selectLabelBounds];
+}
+
+-(void) checkPointInLabelBounds: (CGPoint)point {
+
+     for (NSString *boundString in _labelBoundsArray_screen) {
+         CGRect rect = CGRectFromString(boundString);
+         CGRect imageRect = [self coordinatesScreenToImage:rect byImage:_sourceImage];
+         NSString *imageRectStr = NSStringFromCGRect(imageRect);
+         if([self isPoint:_pointCurrent insideOfRect:rect] && ![self isStoredBounds:imageRectStr]){
+             [_selectLabelBounds addObject:imageRectStr];
+         }
+     }
+}
+
+
+-(BOOL)isStoredBounds: (NSString*)rectStr {
+    // Image coordinate
+    for (NSString * boundString in _selectLabelBounds) {
+        if ([boundString isEqualToString:rectStr]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
+-(BOOL)isPoint:(CGPoint)point insideOfRect:(CGRect)rect
+{
+    if ( CGRectContainsPoint(rect,point))
+        return  YES;// inside
+    else
+        return  NO;// outside
+}
+
 - (CGRect) coordinatesImageToScreen:(CGRect)sourceRect byImage:(UIImage *) image {
     NSInteger w = image.size.width;
-    NSInteger h = image.size.height;
-    CGFloat scaleW = w /  self.ocrImageView.frame.size.width;
-    CGFloat scaleH = h / self.ocrImageView.frame.size.height;
-    CGFloat scale;
-    if (w<h) {
-        scale = scaleW;
-    }else {
-        scale = scaleH;
-    }
+    CGFloat scale = w /  self.ocrImageView.frame.size.width;
     return CGRectMake(sourceRect.origin.x/scale, sourceRect.origin.y/scale, sourceRect.size.width/scale,sourceRect.size.height/scale);
+}
+
+- (CGRect) coordinatesScreenToImage:(CGRect)sourceRect byImage:(UIImage *) image {
+    NSInteger w = image.size.width;
+    CGFloat scale = w /  self.ocrImageView.frame.size.width;
+    return CGRectMake(sourceRect.origin.x*scale, sourceRect.origin.y*scale, sourceRect.size.width*scale,sourceRect.size.height*scale);
 }
 
 
@@ -82,16 +162,28 @@
 
 #pragma mark - OCR delegate
 
-//-(void) startOCR {}
-//-(void) progressOCR:(NSInteger)progress{}
-//-(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image{}
-//-(void) passOCRThreshold:(NSInteger)number{}
-//-(void) failOCRThreshold:(NSInteger)number{}
-//-(void) cancelledOCR{}
-//-(void) ocrLabelCropped: (UIImage*)image{}
--(void) ocrDebugImage: (UIImage*)image{
-    self.debugImageView.image = image;
+-(void) startOCR {
 }
+-(void) progressOCR:(NSInteger)progress{
+    NSLog(@"=========progress %f==================", progress);
+}
+-(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image{
+    NSString *combinedStr = @"";
+    for (NSString *str in subStrings){
+        if (![str isEqualToString:@""]) {
+            combinedStr = [NSString stringWithFormat:@"%@ %@",combinedStr,str];
+        }
+    }
+    self.debugLabel.text = combinedStr;
+}
+
+-(void) failedOCR: (OCRERRROR)errorCode {
+    self.debugLabel.text = @"[no drawn bounds]";
+}
+
+
+-(void) cancelledOCR{}
+
 
 
 

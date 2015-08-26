@@ -78,11 +78,11 @@
         
         self.ocrTargetImageView.image = cropedImage;
         
-      
-        for(int i=0; i<5; i++){
-            NSLog(@"delay to ocr");
-            [NSThread sleepForTimeInterval:1.0f];
-        }
+//      
+//        for(int i=0; i<5; i++){
+//            NSLog(@"delay to ocr");
+//            [NSThread sleepForTimeInterval:1.0f];
+//        }
         
         if ([self.ocr testOCRThreshold:cropedImage]){
             [self.ocr ocrWithImage:cropedImage];

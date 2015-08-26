@@ -27,7 +27,6 @@
 		ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA60B1B7CEE5700944FA8 /* main.m */; };
 		ADCAA60F1B7CEE5700944FA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */; };
 		ADCAA6121B7CEE5700944FA8 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA6111B7CEE5700944FA8 /* ViewController.mm */; };
-		ADCAA6151B7CEE5700944FA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6131B7CEE5700944FA8 /* Main.storyboard */; };
 		ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6161B7CEE5700944FA8 /* Images.xcassets */; };
 		ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */; };
 		ADCAA6261B7CEE5700944FA8 /* ios_caa_chtocrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAA6251B7CEE5700944FA8 /* ios_caa_chtocrTests.m */; };
@@ -73,7 +72,6 @@
 		ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		ADCAA6101B7CEE5700944FA8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		ADCAA6111B7CEE5700944FA8 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
-		ADCAA6141B7CEE5700944FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADCAA6161B7CEE5700944FA8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ADCAA6191B7CEE5700944FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		ADCAA61F1B7CEE5700944FA8 /* ios-caa-chtocrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-caa-chtocrTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +118,18 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AD82DEB11B8E1F9B0056DE50 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAA6101B7CEE5700944FA8 /* ViewController.h */,
+				AD82DEA91B8E1E990056DE50 /* TestViewController.h */,
+				AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */,
+				AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */,
+				ADCAA6111B7CEE5700944FA8 /* ViewController.mm */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		ADC1DB5B1B7D01E800A0D165 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,17 +166,12 @@
 		ADCAA6081B7CEE5700944FA8 /* ios-caa-chtocr */ = {
 			isa = PBXGroup;
 			children = (
+				ADC1DB431B7CF15A00A0D165 /* tessdata */,
 				ADC1DB5B1B7D01E800A0D165 /* Tools */,
 				ADC1DB481B7CF59F00A0D165 /* testImages */,
-				ADC1DB431B7CF15A00A0D165 /* tessdata */,
+				AD82DEB11B8E1F9B0056DE50 /* View Controllers */,
 				ADCAA60D1B7CEE5700944FA8 /* AppDelegate.h */,
 				ADCAA60E1B7CEE5700944FA8 /* AppDelegate.m */,
-				ADCAA6101B7CEE5700944FA8 /* ViewController.h */,
-				AD82DEA91B8E1E990056DE50 /* TestViewController.h */,
-				AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */,
-				AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */,
-				ADCAA6111B7CEE5700944FA8 /* ViewController.mm */,
-				ADCAA6131B7CEE5700944FA8 /* Main.storyboard */,
 				ADCAA6161B7CEE5700944FA8 /* Images.xcassets */,
 				ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */,
 				ADCAA6091B7CEE5700944FA8 /* Supporting Files */,
@@ -300,7 +305,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADCAA6151B7CEE5700944FA8 /* Main.storyboard in Resources */,
 				ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */,
 				ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */,
 				ADC1DB491B7CF59F00A0D165 /* testImages in Resources */,
@@ -385,14 +389,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		ADCAA6131B7CEE5700944FA8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ADCAA6141B7CEE5700944FA8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		ADCAA6181B7CEE5700944FA8 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

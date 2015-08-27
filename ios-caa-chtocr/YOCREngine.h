@@ -30,7 +30,7 @@ typedef enum OCRERRROR : NSInteger {
 
 @interface YOCREngine : NSObject
 @property (nonatomic, weak) id<YOCREngineDelegate>delegate;
-@property(assign, nonatomic) bool cancelOCR;
+@property(assign, atomic) bool cancelOCR;
 @property(assign, atomic) bool isOCRing;
 
 -(NSMutableArray *) getLabelBounds:(UIImage *)image;

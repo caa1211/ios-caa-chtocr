@@ -33,6 +33,7 @@ using namespace cv;
         self.tesseract.delegate = self;
         //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
         self.tesseract.charBlacklist = @"卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍";
+        self.cancelOCR = NO;
         
      //charBlacklist
       //charWhitelist
@@ -134,7 +135,7 @@ struct pixel {
 -(void) ocrWithImage:(UIImage *)image inBounds:(NSMutableArray*)boundsArray{
     [self.delegate startOCR];
     self.isOCRing = YES;
-    self.cancelOCR = NO;
+    //self.cancelOCR = NO;
     
     dispatch_async(self.cropImageQueue, ^{
         cv::Mat mat = [CVTools cvMatFromUIImage:image];
@@ -154,17 +155,26 @@ struct pixel {
                 
                 NSLog(@"recognizedText= %@", trimmedString);
                 
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.delegate finishOCR:trimmedString image:image];
-                    self.isOCRing = NO;
-                });
+                if (self.cancelOCR == YES){
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        [self.delegate cancelledOCR];
+                    });
+                }else{
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        [self.delegate finishOCR:trimmedString image:image];
+
+                    });
+                }
+                self.isOCRing = NO;
+                self.cancelOCR = NO;
                 
             }];
         }else {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.delegate failedOCR:OCRERRROR_NOBOUNDS];
-                self.isOCRing = NO;
             });
+            self.isOCRing = NO;
+            self.cancelOCR = NO;
         }
 
     });
@@ -321,11 +331,6 @@ struct pixel {
 }
 
 - (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    if (self.cancelOCR ==YES){
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self.delegate cancelledOCR];
-        });
-    }
     return self.cancelOCR;
 }
 

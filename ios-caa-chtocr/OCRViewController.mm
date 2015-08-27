@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (assign, nonatomic) BOOL runnedOCR;
+@property (assign, nonatomic) NSInteger typerRighterCount;
+@property (strong, nonatomic) NSMutableArray *ocrResults; //Collected from related search
+@property (strong, nonatomic) NSString *ocrRawResult; // OCR raw result
 @end
 
 @implementation OCRViewController
@@ -48,6 +51,7 @@
     self.ocr = [[YOCREngine alloc]init];
     self.ocr.delegate = self;
     
+    _typerRighterCount = 0;
     _labelBoundsArray_image = [[NSMutableArray alloc] init];
     _labelBoundsArray_screen = [[NSMutableArray alloc] init];
     _selectLabelBounds = [[NSMutableArray alloc] init];
@@ -103,6 +107,7 @@
         return;
     }
     
+    self.ocr.cancelOCR = YES;
     self.drawView.image = [[UIImage alloc] init];
     [_selectLabelBounds removeAllObjects];
 }
@@ -213,22 +218,55 @@
    NSLog(@"=========progress %ld==================", progress);
    self.progressView.progress = (float)progress/100;
 }
+
+
+- (void)incrementTyperighterCount
+{
+    if(_typerRighterCount == 0)
+    {
+        // Start
+    }
+    _typerRighterCount++;
+}
+
+- (void)decrementTyperighterCount
+{
+    _typerRighterCount--;
+    if(_typerRighterCount <= 0)
+    {
+        [_ocrResults addObject:_ocrRawResult];
+        
+        NSString *joinedString = [_ocrResults componentsJoinedByString:@", "];
+        self.debugLabel.text = joinedString;
+        NSLog(@"ocr joinedString: %@", joinedString);
+        // End
+        _typerRighterCount = 0;
+        self.progressView.progress = 1;
+    }
+}
+
+
 -(void) finishOCR:(NSString *)resultString image:(UIImage*)image{
 
+    _ocrResults =[[NSMutableArray alloc] init];
+    _ocrRawResult = resultString;
     
-    [Typerighter googleTypeRighter:resultString completion:^(NSMutableArray *result, NSError *error) {
+    //Collect suggested text from related search of google
+    [self incrementTyperighterCount];
+    [Typerighter googleTypeRighter:resultString completion:^(NSMutableArray *resultArray, NSError *error) {
+        [_ocrResults addObjectsFromArray:resultArray];
+        [self decrementTyperighterCount];
         
-        NSMutableArray *totalArray =[[NSMutableArray alloc] initWithArray:result];
-        [totalArray addObject:resultString];
-        
-        NSString *joinedString = [totalArray componentsJoinedByString:@", "];
-        self.debugLabel.text = joinedString;
-        
-        NSLog(@"ocr joinedString: %@", joinedString);
-        self.progressView.progress = 1;
     }];
-
     
+    //Collect suggested text from related ecTokenization
+    [self incrementTyperighterCount];
+    [Typerighter ecTokenization:resultString completion:^(NSString *str, NSError *error) {
+        if(str!=nil){
+            [_ocrResults addObject:str];
+        }
+        [self decrementTyperighterCount];
+    }];
    
 }
 
@@ -238,7 +276,9 @@
 }
 
 
--(void) cancelledOCR{}
+-(void) cancelledOCR{
+    NSLog(@"===========cancelledOCR================");
+}
 
 
 

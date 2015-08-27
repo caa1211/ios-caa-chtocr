@@ -12,4 +12,5 @@
 @interface Typerighter : NSObject
 + (void)googleTypeRighter:(NSString *)keyword completion: (void(^)(NSMutableArray *result, NSError *error))completion;
 + (NSMutableArray *) googleTypeRighterSync:(NSString *)keyword;
++ (void) ecTokenization:(NSString *)keyword completion: (void(^)(NSString *str, NSError *error))completion;
 @end

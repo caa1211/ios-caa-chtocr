@@ -350,38 +350,6 @@ struct pixel {
     return [self detectLetters:mat];
 }
 
-CGSize maxSize = CGSizeMake(0, 0);
--(void)applyDetectRule:(cv::Rect)rect rectPool:(std::vector<cv::Rect>*)rectPool {
-    
-    
-    /*
-     if (
-     rect.width > rect.height
-     && rect.height > 30
-     && rect.height < 180
-     && rect.width > 100
-     && rect.width < 760
-     && rect.width / rect.height > 2
-     && rect.width / rect.height < 15
-     && rect.width / rect.height < 180
-     && rect.y < 300
-     && rect.size().width > maxSize.width
-     )
-     */
-    
-    if (
-        rect.width > rect.height
-//        && rect.height > 30
-//        && rect.height < 300
-//        && rect.width > 100
-//        && rect.width < 780
-//        && rect.width / rect.height > 2
-//        && rect.width / rect.height < 15
-//        && rect.size().width > maxSize.width
-        ){
-        rectPool->push_back(rect);
-    }
-}
 
 -(std::vector<cv::Rect>) detectLetters:(cv::Mat)img{
     std::vector<cv::Rect> boundRect;
@@ -410,7 +378,8 @@ CGSize maxSize = CGSizeMake(0, 0);
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
             
             
-            if (appRect.width > appRect.height){
+            if (appRect.width > appRect.height &&
+                appRect.height > 20){
                 boundRect.push_back(appRect);
             }
 

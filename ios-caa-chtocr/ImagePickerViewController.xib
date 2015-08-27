@@ -14,9 +14,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5f-Ca-GaW">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5f-Ca-GaW">
                     <rect key="frame" x="63" y="333" width="195" height="183"/>
                     <color key="backgroundColor" red="0.31718291483983774" green="0.73208986543258636" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="183" id="DdQ-F9-RcH"/>
+                    </constraints>
                     <state key="normal" title="Local image">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -24,9 +27,12 @@
                         <action selector="onLibrary:" destination="-1" eventType="touchUpInside" id="DTD-NR-eX4"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wo3-nd-Q0S">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wo3-nd-Q0S">
                     <rect key="frame" x="63" y="99" width="195" height="183"/>
                     <color key="backgroundColor" red="0.18823529410000001" green="0.82745098039999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="183" id="kKg-Dh-D38"/>
+                    </constraints>
                     <state key="normal" title="Camera">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -47,6 +53,11 @@
                 <constraint firstAttribute="trailing" secondItem="wo3-nd-Q0S" secondAttribute="trailing" constant="62" id="kRT-Lj-da3"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="dAr-fP-xVh"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

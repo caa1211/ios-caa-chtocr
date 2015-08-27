@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-
+@property (assign, nonatomic) BOOL runnedOCR;
 @end
 
 @implementation OCRViewController
@@ -40,8 +40,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     self.ocrImageView.alignTop = YES;
     self.ocrImageView.alignLeft = YES;
     self.ocr = [[YOCREngine alloc]init];
@@ -59,11 +58,16 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if (self.runnedOCR != YES) {
+        [self ocrImage];
+        self.runnedOCR = YES;
+    }
+}
 
+-(void) ocrImage {
+    
     _sourceImage = [self unifyImage:_sourceImage];
-    
     self.ocrImageView.image = _sourceImage;
-    
     _labelBoundsArray_image = [self.ocr getLabelBounds:_sourceImage];
     [_labelBoundsArray_screen removeAllObjects];
     [_selectLabelBounds removeAllObjects];
@@ -80,17 +84,20 @@
         rectangle.backgroundColor = [UIColor redColor];
         [self.ocrWrapperView addSubview:rectangle];
     }
+    
 }
 
-
--(void) viewDidLayoutSubviews{
- 
-}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+   
     UITouch *touch = [touches anyObject];
     _pointCurrent = [touch locationInView:self.ocrWrapperView];
+    
+    if(![self isPoint:_pointCurrent insideOfRect:self.ocrWrapperView.bounds] ) {
+        return;
+    }
+    
     self.drawView.image = [[UIImage alloc] init];
     [_selectLabelBounds removeAllObjects];
 }
@@ -105,8 +112,8 @@
     }
     UIGraphicsBeginImageContext(self.drawView.frame.size);
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 18.0);
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.5, 0.5, 0.7, 0.6);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 20.0);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.6, 0.5, 0.7, 0.7);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
@@ -118,11 +125,16 @@
     brushT.y = brushT.y + 6;
     CGPoint brushB = pointNext;
     brushB.y = brushT.y - 6;
+    
+    [self checkPointInLabelBounds:pointNext];
     [self checkPointInLabelBounds:brushT];
     [self checkPointInLabelBounds:brushB];
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if(![self isPoint:_pointCurrent insideOfRect:self.ocrWrapperView.bounds] ) {
+        return;
+    }
     [_ocr ocrWithImage:_sourceImage inBounds:_selectLabelBounds];
 }
 

@@ -10,4 +10,5 @@
 
 @interface OCRViewController : UIViewController
 - (id)initWithImage:(UIImage *)image;
+@property(strong, nonatomic) UIViewController *picker;
 @end

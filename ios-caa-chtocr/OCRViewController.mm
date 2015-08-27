@@ -13,7 +13,7 @@
 #import "Typerighter.h"
 
 
-@interface OCRViewController () <YOCREngineDelegate>
+@interface OCRViewController () <YOCREngineDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageViewAligned *ocrImageView;
 @property (strong, nonatomic) YOCREngine *ocr;
 @property (weak, nonatomic) IBOutlet UIImageView *drawView;
@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *debugLabel;
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-@property (assign, nonatomic) BOOL runnedOCR;
+@property (assign, nonatomic) BOOL isImageOCRed;
 @property (assign, nonatomic) NSInteger typerRighterCount;
 @property (strong, nonatomic) NSMutableArray *ocrResults; //Collected from related search
 @property (strong, nonatomic) NSString *ocrRawResult; // OCR raw result
@@ -51,11 +51,7 @@
     self.ocr = [[YOCREngine alloc]init];
     self.ocr.delegate = self;
     
-    _typerRighterCount = 0;
-    _labelBoundsArray_image = [[NSMutableArray alloc] init];
-    _labelBoundsArray_screen = [[NSMutableArray alloc] init];
-    _selectLabelBounds = [[NSMutableArray alloc] init];
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+       if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
 }
@@ -67,19 +63,33 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.runnedOCR != YES) {
+    if (self.isImageOCRed != YES) {
         [self ocrImage];
-        self.runnedOCR = YES;
+        self.isImageOCRed = YES;
     }
 }
 
 -(void) ocrImage {
+
+    _typerRighterCount = 0;
+    _labelBoundsArray_image = [[NSMutableArray alloc] init];
+    _labelBoundsArray_screen = [[NSMutableArray alloc] init];
+    _selectLabelBounds = [[NSMutableArray alloc] init];
+
+    if (self.ocr.isOCRing) {
+        self.ocr.cancelOCR = YES;
+    }
+    
+    self.drawView.image = [[UIImage alloc] init];
+    self.progressView.progress = 0;
+    self.debugLabel.text = @"";
     
     _sourceImage = [self unifyImage:_sourceImage];
     self.ocrImageView.image = _sourceImage;
     _labelBoundsArray_image = [self.ocr getLabelBounds:_sourceImage];
     [_labelBoundsArray_screen removeAllObjects];
-    [_selectLabelBounds removeAllObjects];
+    
+    [[self.drawView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     NSInteger cornerRadius = 5;
     
@@ -96,13 +106,13 @@
         rectangle.layer.borderColor = [UIColor redColor].CGColor;
         rectangle.layer.borderWidth = 2.0f;
         rectangle.layer.cornerRadius = cornerRadius;
-        [self.ocrWrapperView addSubview:rectangle];
+        [self.drawView addSubview:rectangle];
         
         UIView *rectangleFill = [[UIView alloc] initWithFrame:rect];
         rectangleFill.alpha = 0.2;
         rectangleFill.backgroundColor = [UIColor whiteColor];
         rectangleFill.layer.cornerRadius = cornerRadius;
-        [self.ocrWrapperView addSubview:rectangleFill];
+        [self.drawView addSubview:rectangleFill];
         
     }
     
@@ -122,7 +132,10 @@
 -(void) drawBegin: (CGPoint)point {
     _pointCurrent = point;
     
-    self.ocr.cancelOCR = YES;
+    if (self.ocr.isOCRing) {
+        self.ocr.cancelOCR = YES;
+    }
+    
     self.drawView.image = [[UIImage alloc] init];
     [_selectLabelBounds removeAllObjects];
 }
@@ -146,12 +159,11 @@
     CGPoint brushB = pointNext;
     brushB.y = brushT.y - 6;
     
-    dispatch_queue_t queryQueue = dispatch_queue_create("checkPointQueue", nil);
-    dispatch_async(queryQueue, ^{
-        [self checkPointInLabelBounds:pointNext];
-        [self checkPointInLabelBounds:brushT];
-        [self checkPointInLabelBounds:brushB];
-    });
+ 
+    [self checkPointInLabelBounds:pointNext];
+    [self checkPointInLabelBounds:brushT];
+    [self checkPointInLabelBounds:brushB];
+ 
 }
 
 -(void) drawEnd: (CGPoint)point {
@@ -192,9 +204,25 @@
 
 
 - (IBAction)onRetake:(id)sender {
-    
-    
+    ((UIImagePickerController *)self.picker).delegate = self;
+    [self presentViewController:self.picker animated:YES completion:^{
+        
+    }];
 }
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *newImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    _sourceImage = newImage;
+    self.isImageOCRed = NO;
+
+    [self ocrImage];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 - (CGRect) coordinatesImageToScreen:(CGRect)sourceRect byImage:(UIImage *) image {
     CGFloat scaleW = image.size.width /  self.ocrImageView.frame.size.width;

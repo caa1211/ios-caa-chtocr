@@ -50,10 +50,10 @@
     UIImage *cardImage = [info objectForKey:UIImagePickerControllerOriginalImage];
 
     OCRViewController *ocrVC = [[OCRViewController alloc] initWithImage: cardImage];
+    ocrVC.picker = picker;
     [picker dismissViewControllerAnimated:YES completion:NULL];
 
     [self.navigationController pushViewController:ocrVC animated:YES];
-  
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

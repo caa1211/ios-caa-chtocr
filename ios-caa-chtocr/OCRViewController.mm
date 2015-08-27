@@ -22,7 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *labelBoundsArray_screen;
 @property (strong, nonatomic) NSMutableArray *selectLabelBounds;
 @property (strong, nonatomic) UIImage* sourceImage;
-@property (weak, nonatomic) IBOutlet UILabel *debugLabel;
+@property (weak, nonatomic) IBOutlet UITextView *debugLabel;
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (assign, nonatomic) BOOL runnedOCR;
@@ -217,13 +217,14 @@
 
     
     [Typerighter googleTypeRighter:resultString completion:^(NSMutableArray *result, NSError *error) {
-        if (result.count > 0) {
-            NSString *joinedString = [result componentsJoinedByString:@","];
-            self.debugLabel.text = joinedString;
-        }else {
-            self.debugLabel.text = resultString;
-        }
         
+        NSMutableArray *totalArray =[[NSMutableArray alloc] initWithArray:result];
+        [totalArray addObject:resultString];
+        
+        NSString *joinedString = [totalArray componentsJoinedByString:@", "];
+        self.debugLabel.text = joinedString;
+        
+        NSLog(@"ocr joinedString: %@", joinedString);
         self.progressView.progress = 1;
     }];
 

@@ -32,7 +32,7 @@ using namespace cv;
         self.tesseract.maximumRecognitionTime = 8.0;
         self.tesseract.delegate = self;
         //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-        //self.tesseract.charBlacklist = @"己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n";
+        self.tesseract.charBlacklist = @"犬冉鬥";
      //charBlacklist
       //charWhitelist
     }

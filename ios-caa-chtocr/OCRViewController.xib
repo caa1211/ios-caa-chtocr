@@ -28,9 +28,13 @@
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jIF-nN-IXm" userLabel="drawView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="488"/>
+                            <gestureRecognizers/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.31718291479999999" green="0.73208986539999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
+                    </accessibility>
                     <constraints>
                         <constraint firstItem="JaV-tj-Wyc" firstAttribute="top" secondItem="XrM-Li-Ili" secondAttribute="top" id="0s9-nQ-eD6"/>
                         <constraint firstAttribute="bottom" secondItem="JaV-tj-Wyc" secondAttribute="bottom" id="6LK-hp-b9A"/>
@@ -41,6 +45,9 @@
                         <constraint firstItem="jIF-nN-IXm" firstAttribute="leading" secondItem="XrM-Li-Ili" secondAttribute="leading" id="Qde-sy-WNf"/>
                         <constraint firstItem="JaV-tj-Wyc" firstAttribute="leading" secondItem="XrM-Li-Ili" secondAttribute="leading" id="pK7-pm-uGE"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="qgg-7s-P9G" appends="YES" id="3OD-2y-4Sc"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jcd-2k-6Ou">
                     <rect key="frame" x="0.0" y="468" width="320" height="100"/>
@@ -98,5 +105,10 @@
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="qgg-7s-P9G">
+            <connections>
+                <action selector="onPanDrawView:" destination="-1" id="WUx-nl-Pqi"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

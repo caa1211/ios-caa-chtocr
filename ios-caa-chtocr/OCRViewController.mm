@@ -81,6 +81,8 @@
     [_labelBoundsArray_screen removeAllObjects];
     [_selectLabelBounds removeAllObjects];
     
+    NSInteger cornerRadius = 5;
+    
     for (NSString * boundString in _labelBoundsArray_image) {
         CGRect rect = CGRectFromString(boundString);
         rect = [self coordinatesImageToScreen:rect byImage: _sourceImage];
@@ -89,41 +91,49 @@
         [_labelBoundsArray_screen addObject:NSStringFromCGRect(rect)];
         
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];
-        rectangle.alpha = 0.3;
-        rectangle.backgroundColor = [UIColor redColor];
+        rectangle.alpha = 0.7;
+        //rectangle.backgroundColor = [UIColor whiteColor];
+        rectangle.layer.borderColor = [UIColor redColor].CGColor;
+        rectangle.layer.borderWidth = 2.0f;
+        rectangle.layer.cornerRadius = cornerRadius;
         [self.ocrWrapperView addSubview:rectangle];
+        
+        UIView *rectangleFill = [[UIView alloc] initWithFrame:rect];
+        rectangleFill.alpha = 0.2;
+        rectangleFill.backgroundColor = [UIColor whiteColor];
+        rectangleFill.layer.cornerRadius = cornerRadius;
+        [self.ocrWrapperView addSubview:rectangleFill];
+        
     }
     
 }
 
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-   
-    UITouch *touch = [touches anyObject];
-    _pointCurrent = [touch locationInView:self.ocrWrapperView];
-    
-    if(![self isPoint:_pointCurrent insideOfRect:self.ocrWrapperView.bounds] ) {
-        return;
+- (IBAction)onPanDrawView:(UIPanGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.ocrWrapperView];
+    if(sender.state == UIGestureRecognizerStateBegan){
+        [self drawBegin: point];
+    }else if(sender.state == UIGestureRecognizerStateChanged){
+        [self drawMove: point];
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+        [self drawEnd: point];
     }
+}
+
+-(void) drawBegin: (CGPoint)point {
+    _pointCurrent = point;
     
     self.ocr.cancelOCR = YES;
     self.drawView.image = [[UIImage alloc] init];
     [_selectLabelBounds removeAllObjects];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    CGPoint pointNext = [touch locationInView:self.ocrWrapperView];
+-(void) drawMove: (CGPoint)point {
+    CGPoint pointNext = point;
 
-    if(![self isPoint:pointNext insideOfRect:self.ocrWrapperView.bounds] ) {
-        return;
-    }
     UIGraphicsBeginImageContext(self.drawView.frame.size);
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 20.0);
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.6, 0.5, 0.7, 0.7);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.23, 0.67, 0.86, 0.7);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
@@ -141,10 +151,7 @@
     [self checkPointInLabelBounds:brushB];
 }
 
--(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    if(![self isPoint:_pointCurrent insideOfRect:self.ocrWrapperView.bounds] ) {
-        return;
-    }
+-(void) drawEnd: (CGPoint)point {
     [_ocr ocrWithImage:_sourceImage inBounds:_selectLabelBounds];
 }
 

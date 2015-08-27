@@ -205,10 +205,19 @@ struct pixel {
     
     UIImage *whiteImage = [CVTools UIImageFromCVMat:wmat];
     
+    
+    //SyncOCR
     NSString *ocrResult = [self doOCR_sync:whiteImage];
-    
-    
     complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+    
+    
+//    //AsyncOCR
+//    [self doOCR_async:whiteImage complete:^(NSString *recognizedText) {
+//         NSString *ocrResult=recognizedText;
+//         complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+//    }];
+    
+  
 }
 
 -(cv::Mat) lettersFromImage:(cv::Mat)mat letterBoxes:(std::vector<cv::Rect>)letterBoxes {
@@ -284,20 +293,20 @@ struct pixel {
     return recognizedText;
 }
 
-- (void) doOCR_async:(UIImage*)image{
+- (void) doOCR_async:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
     
     // Mark below for avoiding BSXPCMessage error
     UIImage *bwImage = [image g8_blackAndWhite];
     
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"chi_tra"];
-    operation.tesseract.maximumRecognitionTime = 3.0;
+    operation.tesseract.maximumRecognitionTime = 8.0;
     operation.delegate = self;
     operation.tesseract.image = bwImage;
     
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
-        NSString *recognizedText = tesseract.recognizedText;
-        NSLog(@"recognizedText= %@", recognizedText);
+        NSString *recognizedText = self.tesseract.recognizedText;
         [self.ocrResultArray addObject:recognizedText];
+        complete(recognizedText);
         [G8Tesseract clearCache];
     };
     

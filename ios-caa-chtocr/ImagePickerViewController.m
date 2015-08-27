@@ -16,15 +16,15 @@
 @end
 
 @implementation ImagePickerViewController
+
+
 - (IBAction)onCamera:(id)sender {
-    
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePickerController.delegate = self;
     [self presentViewController:imagePickerController animated:YES completion:^{
         
     }];
-    
 }
 - (IBAction)onLibrary:(id)sender {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];

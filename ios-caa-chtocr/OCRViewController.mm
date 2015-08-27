@@ -146,9 +146,12 @@
     CGPoint brushB = pointNext;
     brushB.y = brushT.y - 6;
     
-    [self checkPointInLabelBounds:pointNext];
-    [self checkPointInLabelBounds:brushT];
-    [self checkPointInLabelBounds:brushB];
+    dispatch_queue_t queryQueue = dispatch_queue_create("checkPointQueue", nil);
+    dispatch_async(queryQueue, ^{
+        [self checkPointInLabelBounds:pointNext];
+        [self checkPointInLabelBounds:brushT];
+        [self checkPointInLabelBounds:brushB];
+    });
 }
 
 -(void) drawEnd: (CGPoint)point {
@@ -187,6 +190,12 @@
         return  NO;// outside
 }
 
+
+- (IBAction)onRetake:(id)sender {
+    
+    
+}
+
 - (CGRect) coordinatesImageToScreen:(CGRect)sourceRect byImage:(UIImage *) image {
     CGFloat scaleW = image.size.width /  self.ocrImageView.frame.size.width;
     CGFloat scaleH = image.size.height /  self.ocrImageView.frame.size.height;
@@ -221,7 +230,6 @@
     self.debugLabel.text = @"";
 }
 -(void) progressOCR:(NSInteger)progress{
-   NSLog(@"=========progress %ld==================", progress);
    self.progressView.progress = (float)progress/100;
 }
 

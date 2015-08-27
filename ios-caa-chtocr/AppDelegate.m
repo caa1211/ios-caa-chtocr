@@ -22,7 +22,7 @@
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ImagePickerViewController alloc]init]];
     
-    //self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[OCRViewController alloc]initWithImage:[UIImage imageNamed:@"testImages/018.jpg"]]];
+//    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[OCRViewController alloc]initWithImage:[UIImage imageNamed:@"testImages/012.jpg"]]];
     
     [self.window makeKeyAndVisible];
     

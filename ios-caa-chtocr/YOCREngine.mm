@@ -32,7 +32,8 @@ using namespace cv;
         self.tesseract.maximumRecognitionTime = 8.0;
         self.tesseract.delegate = self;
         //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-        self.tesseract.charBlacklist = @"犬冉鬥";
+        self.tesseract.charBlacklist = @"卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍";
+        
      //charBlacklist
       //charWhitelist
     }
@@ -144,7 +145,7 @@ struct pixel {
                 //background thread
                 
                 NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:
-                                             @"己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"];
+                                             @" 己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"];
                 NSString *clearOcrResult = [[ocrRawResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
                 
                 //NSString *clearOcrResult = ocrRawResult;
@@ -333,7 +334,7 @@ struct pixel {
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 2) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 5) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];
@@ -352,7 +353,7 @@ struct pixel {
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
             
             
-            if (appRect.width / appRect.height > 1.5 &&
+            if ( (float)appRect.width / appRect.height > 1.5 &&
                 appRect.height > 20){
                 boundRect.push_back(appRect);
             }

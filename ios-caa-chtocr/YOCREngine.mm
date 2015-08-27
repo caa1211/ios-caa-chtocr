@@ -31,7 +31,10 @@ using namespace cv;
         self.tesseract = [[G8Tesseract alloc] initWithLanguage:@"chi_tra"];
         self.tesseract.maximumRecognitionTime = 8.0;
         self.tesseract.delegate = self;
-        
+        //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
+        //self.tesseract.charBlacklist = @"己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n";
+     //charBlacklist
+      //charWhitelist
     }
     
     return self;
@@ -127,40 +130,6 @@ struct pixel {
 }
 
 
-
--(void)ocrWithImage:(UIImage*)image {
-    [self.delegate startOCR];
-    self.isOCRing = YES;
-    self.cancelOCR = NO;
-    
-    dispatch_async(self.cropImageQueue, ^{
-        cv::Mat mat = [CVTools cvMatFromUIImage:image];
-        
-        std::vector<cv::Rect> bounds = [self detectLetters:mat];
-        
-        if (bounds.size() > 0){
-
-            [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrResult, UIImage *image) {
-                //background thread
-                
-                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@",=-)(*&^%$#@!~}{?></:.;\"\'`ˉ"];
-                NSString *clearOcrResult = [[ocrResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
-                
-                NSArray *subStrings = [clearOcrResult componentsSeparatedByCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"\n"]];
-                
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.delegate finishOCR:subStrings image:image];
-                    self.isOCRing = NO;
-                });
-                
-            }];
-            
-        }else {
-            self.isOCRing = NO;
-        }
-    });
-}
-
 -(void) ocrWithImage:(UIImage *)image inBounds:(NSMutableArray*)boundsArray{
     [self.delegate startOCR];
     self.isOCRing = YES;
@@ -171,15 +140,21 @@ struct pixel {
         std::vector<cv::Rect> bounds = [self bounsArrayToVectors:boundsArray];
         if (bounds.size() > 0){
 
-            [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrResult, UIImage *image) {
+            [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrRawResult, UIImage *image) {
                 //background thread
                 
-                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@",=-)(*&^%$#@!~}{?></:.;\"\'`ˉ"];
-                NSString *clearOcrResult = [[ocrResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
-                NSArray *subStrings = [clearOcrResult componentsSeparatedByCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"\n"]];
+                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:
+                                             @"己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"];
+                NSString *clearOcrResult = [[ocrRawResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
+                
+                //NSString *clearOcrResult = ocrRawResult;
+                
+                NSString *trimmedString = [clearOcrResult stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                
+                NSLog(@"recognizedText= %@", trimmedString);
                 
                 dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.delegate finishOCR:subStrings image:image];
+                    [self.delegate finishOCR:trimmedString image:image];
                     self.isOCRing = NO;
                 });
                 
@@ -302,7 +277,6 @@ struct pixel {
     //    UIImage *imageWithBlocks = [tesseract imageWithBlocks:characterBoxes drawText:YES thresholded:NO];
     
     NSString *recognizedText = self.tesseract.recognizedText;
-    NSLog(@"recognizedText= %@", recognizedText);
     
     [self.ocrResultArray addObject:recognizedText];
     [G8Tesseract clearCache];
@@ -359,7 +333,7 @@ struct pixel {
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(20, 3) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 2) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];
@@ -372,20 +346,17 @@ struct pixel {
      
         if (contours[i].size() > 80)
         {
-            NSLog(@"=========contours[i].size() %d==================", contours[i].size());
+            //NSLog(@"=========contours[i].size() %d==================", contours[i].size());
           
             cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
             
             
-            if (appRect.width > appRect.height &&
+            if (appRect.width / appRect.height > 1.5 &&
                 appRect.height > 20){
                 boundRect.push_back(appRect);
             }
 
-                
-            //labelThreshold
-            //[self applyDetectRule:appRect rectPool:&boundRect];
         }
     }
     //NSLog(@"contours[i].size() > 400,  %ld", count);

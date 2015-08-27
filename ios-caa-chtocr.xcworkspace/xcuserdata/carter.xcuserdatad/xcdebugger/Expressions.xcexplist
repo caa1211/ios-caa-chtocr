@@ -11,13 +11,24 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "+[Typerighter googleTypeRighterSync:]:Typerighter.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "brs">
+            </PersistentString>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[OCRViewController viewDidLoad]:OCRViewController.mm">
       </ContextState>
       <ContextState
          contextName = "-[OCRViewController transformationCoordinates:byImage:]:OCRViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "self.ocrImageView.frame.size.width">
+               value = "self.ocrImageView.bounds.size.width">
             </PersistentString>
             <PersistentString
                value = "self.ocrImageView.frame">
@@ -26,7 +37,7 @@
                value = "image.size">
             </PersistentString>
             <PersistentString
-               value = "self.ocrImageView.bounds.size.width">
+               value = "self.ocrImageView.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

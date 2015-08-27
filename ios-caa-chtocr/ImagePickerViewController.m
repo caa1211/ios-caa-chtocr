@@ -8,6 +8,8 @@
 
 #import "ImagePickerViewController.h"
 #import "OCRViewController.h"
+#import "OCGumbo/OCGumbo+Query.h"
+
 
 @interface ImagePickerViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -15,6 +17,7 @@
 
 @implementation ImagePickerViewController
 - (IBAction)onCamera:(id)sender {
+    
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePickerController.delegate = self;
@@ -34,7 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
 }
 
 - (void)didReceiveMemoryWarning {

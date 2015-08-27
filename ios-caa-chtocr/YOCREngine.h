@@ -21,7 +21,7 @@ typedef enum OCRERRROR : NSInteger {
 
 -(void) startOCR;
 -(void) progressOCR:(NSInteger)progress;
--(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image;
+-(void) finishOCR:(NSString *)resultString image:(UIImage*)image;
 -(void) failedOCR: (OCRERRROR)errorCode;
 -(void) cancelledOCR;
 

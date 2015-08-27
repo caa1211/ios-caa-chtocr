@@ -10,6 +10,8 @@
 #import "YOCREngine.h"
 #import "UIImageViewAligned.h"
 #import "ImageTools.h"
+#import "Typerighter.h"
+
 
 @interface OCRViewController () <YOCREngineDelegate>
 @property (weak, nonatomic) IBOutlet UIImageViewAligned *ocrImageView;
@@ -49,6 +51,9 @@
     _labelBoundsArray_image = [[NSMutableArray alloc] init];
     _labelBoundsArray_screen = [[NSMutableArray alloc] init];
     _selectLabelBounds = [[NSMutableArray alloc] init];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 -(void) viewDidDisappear:(BOOL)animated {
@@ -208,15 +213,22 @@
    NSLog(@"=========progress %ld==================", progress);
    self.progressView.progress = (float)progress/100;
 }
--(void) finishOCR:(NSArray *)subStrings image:(UIImage*)image{
-    NSString *combinedStr = @"";
-    for (NSString *str in subStrings){
-        if (![str isEqualToString:@""]) {
-            combinedStr = [NSString stringWithFormat:@"%@ %@",combinedStr,str];
+-(void) finishOCR:(NSString *)resultString image:(UIImage*)image{
+
+    
+    [Typerighter googleTypeRighter:resultString completion:^(NSMutableArray *result, NSError *error) {
+        if (result.count > 0) {
+            NSString *joinedString = [result componentsJoinedByString:@","];
+            self.debugLabel.text = joinedString;
+        }else {
+            self.debugLabel.text = resultString;
         }
-    }
-    self.debugLabel.text = combinedStr;
-    self.progressView.progress = 1;
+        
+        self.progressView.progress = 1;
+    }];
+
+    
+   
 }
 
 -(void) failedOCR: (OCRERRROR)errorCode {

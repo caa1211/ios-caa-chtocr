@@ -19,20 +19,25 @@
 
 using namespace cv;
 
-@implementation YOCREngine
+#define OCR_TIME 8
+#define OCR_BLOCK_LIST @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶，"
+#define OCR_LANGUAGE @"chi_tra"
+#define OCR_FILTER_CHARS @" 己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"
+
+@implementation YOCREngine 
 
 -(id) init {
     self = [super init];
     
     if(self){
         self.operationQueue = [[NSOperationQueue alloc] init];
-        self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
+        //self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
         
-        self.tesseract = [[G8Tesseract alloc] initWithLanguage:@"chi_tra"];
-        self.tesseract.maximumRecognitionTime = 8.0;
+        self.tesseract = [[G8Tesseract alloc] initWithLanguage:OCR_LANGUAGE];
+        self.tesseract.maximumRecognitionTime = OCR_TIME;
         self.tesseract.delegate = self;
         //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-        self.tesseract.charBlacklist = @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶，";
+        self.tesseract.charBlacklist = OCR_BLOCK_LIST;
         self.cancelOCR = NO;
     }
     
@@ -134,7 +139,7 @@ struct pixel {
     self.isOCRing = YES;
     //self.cancelOCR = NO;
     
-    dispatch_async(self.cropImageQueue, ^{
+    //dispatch_async(self.cropImageQueue, ^{
         cv::Mat mat = [CVTools cvMatFromUIImage:image];
         std::vector<cv::Rect> bounds = [self bounsArrayToVectors:boundsArray];
         if (bounds.size() > 0){
@@ -142,39 +147,36 @@ struct pixel {
             [self extractTextFromCVImage:mat letterBoxes:bounds complete:^(NSString *ocrRawResult, UIImage *image) {
                 //background thread
                 
-                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:
-                                             @" 己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"];
+                NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString: OCR_FILTER_CHARS];
                 NSString *clearOcrResult = [[ocrRawResult componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
-                
-                //NSString *clearOcrResult = ocrRawResult;
-                
+
                 NSString *trimmedString = [clearOcrResult stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 
                 NSLog(@"recognizedText= %@", trimmedString);
                 
                 if (self.cancelOCR == YES){
-                    dispatch_sync(dispatch_get_main_queue(), ^{
+                    //dispatch_sync(dispatch_get_main_queue(), ^{
                         [self.delegate cancelledOCR];
-                    });
+                    //});
                 }else{
-                    dispatch_sync(dispatch_get_main_queue(), ^{
+                    //dispatch_sync(dispatch_get_main_queue(), ^{
                         [self.delegate finishOCR:trimmedString image:image];
 
-                    });
+                    //});
                 }
                 self.isOCRing = NO;
                 self.cancelOCR = NO;
                 
             }];
         }else {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+    //        dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.delegate failedOCR:OCRERRROR_NOBOUNDS];
-            });
+    //        });
             self.isOCRing = NO;
             self.cancelOCR = NO;
         }
 
-    });
+    //});
     
 }
 
@@ -213,16 +215,16 @@ struct pixel {
     UIImage *whiteImage = [CVTools UIImageFromCVMat:wmat];
     
     
-    //SyncOCR
-    NSString *ocrResult = [self doOCR_sync:whiteImage];
-    complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+// SyncOCR
+//    NSString *ocrResult = [self doOCR_sync:whiteImage];
+//    complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
     
     
-//    //AsyncOCR
-//    [self doOCR_async:whiteImage complete:^(NSString *recognizedText) {
-//         NSString *ocrResult=recognizedText;
-//         complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
-//    }];
+// AsyncOCR
+    [self doOCR_async:whiteImage complete:^(NSString *recognizedText) {
+         NSString *ocrResult=recognizedText;
+         complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+    }];
     
   
 }
@@ -243,7 +245,6 @@ struct pixel {
                         green: &green
                          blue: &blue
                         alpha: &alpha];
-        //wmat.setTo(cv::Scalar(138,139,131));
         wmat.setTo(cv::Scalar((red+colorOffset)*255,(green+colorOffset)*255,(blue+colorOffset)*255));
         
     }else {
@@ -305,13 +306,14 @@ struct pixel {
     // Mark below for avoiding BSXPCMessage error
     UIImage *bwImage = [image g8_blackAndWhite];
     
-    G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"chi_tra"];
-    operation.tesseract.maximumRecognitionTime = 8.0;
+    G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:OCR_LANGUAGE];
+    operation.tesseract.maximumRecognitionTime = OCR_TIME;
     operation.delegate = self;
     operation.tesseract.image = bwImage;
-    
+    operation.tesseract.charBlacklist = OCR_BLOCK_LIST;
+    //[operation.tesseract setRect: CGRectMake(0, 0, 100, 100)];
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
-        NSString *recognizedText = self.tesseract.recognizedText;
+        NSString *recognizedText = tesseract.recognizedText;
         [self.ocrResultArray addObject:recognizedText];
         complete(recognizedText);
         [G8Tesseract clearCache];
@@ -345,7 +347,7 @@ struct pixel {
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(23, 5) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(21, 5) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];

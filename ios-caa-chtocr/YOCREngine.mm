@@ -32,11 +32,8 @@ using namespace cv;
         self.tesseract.maximumRecognitionTime = 8.0;
         self.tesseract.delegate = self;
         //self.tesseract.engineMode = G8OCREngineModeTesseractOnly;
-        self.tesseract.charBlacklist = @"撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍";
+        self.tesseract.charBlacklist = @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶，";
         self.cancelOCR = NO;
-        
-     //charBlacklist
-      //charWhitelist
     }
     
     return self;
@@ -348,7 +345,7 @@ struct pixel {
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 5) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(23, 5) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];

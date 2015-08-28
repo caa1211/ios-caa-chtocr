@@ -43,16 +43,22 @@
     
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.ocrImageView.alignTop = YES;
     self.ocrImageView.alignLeft = YES;
     self.ocr = [[YOCREngine alloc]init];
     self.ocr.delegate = self;
     
-       if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+    
+    if (self.isImageOCRed != YES) {
+        [self ocrImage];
+        self.isImageOCRed = YES;
     }
 }
 
@@ -63,10 +69,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.isImageOCRed != YES) {
-        [self ocrImage];
-        self.isImageOCRed = YES;
-    }
+
 }
 
 -(void) ocrImage {
@@ -96,8 +99,7 @@
     for (NSString * boundString in _labelBoundsArray_image) {
         CGRect rect = CGRectFromString(boundString);
         rect = [self coordinatesImageToScreen:rect byImage: _sourceImage];
-        // rect = [self.ocrImageView convertRect:rect toView:self.drawView];
-        
+
         [_labelBoundsArray_screen addObject:NSStringFromCGRect(rect)];
         
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];

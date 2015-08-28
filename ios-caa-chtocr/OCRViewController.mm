@@ -28,6 +28,7 @@
 @property (assign, nonatomic) BOOL isImageOCRed;
 @property (assign, nonatomic) NSInteger typerRighterCount;
 @property (strong, nonatomic) NSMutableArray *ocrResults; //Collected from related search
+@property (weak, nonatomic) IBOutlet UIImageView *debugImageView;
 @property (strong, nonatomic) NSString *ocrRawResult; // OCR raw result
 @end
 
@@ -46,6 +47,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.debugImageView.hidden = YES;
     
     self.ocrImageView.alignTop = YES;
     self.ocrImageView.alignLeft = YES;
@@ -312,6 +315,11 @@
         [self decrementTyperighterCount];
     }];
    
+}
+
+
+-(void) ocrDebugImage:(UIImage*)image {
+    self.debugImageView.image = image;
 }
 
 -(void) failedOCR: (OCRERRROR)errorCode {

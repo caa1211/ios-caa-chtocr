@@ -13,14 +13,15 @@
 @property (strong, nonatomic) UIImage *highlightLattersImage;
 @property (strong, nonatomic) NSMutableArray *ocrResultArray;
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
-@property(strong, nonatomic) dispatch_queue_t cropImageQueue;
+@property(strong, nonatomic) dispatch_queue_t ocrImageQueue;
 @property(strong, nonatomic) G8Tesseract *tesseract;
 @end
 
 using namespace cv;
 
 #define OCR_TIME 8
-#define OCR_BLOCK_LIST @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶，"
+
+#define OCR_BLOCK_LIST @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶鬣襞浤"
 #define OCR_LANGUAGE @"chi_tra"
 #define OCR_FILTER_CHARS @" 己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"
 
@@ -31,7 +32,7 @@ using namespace cv;
     
     if(self){
         self.operationQueue = [[NSOperationQueue alloc] init];
-        //self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
+        self.ocrImageQueue = dispatch_queue_create("crop_queue", nil);
         
         self.tesseract = [[G8Tesseract alloc] initWithLanguage:OCR_LANGUAGE];
         self.tesseract.maximumRecognitionTime = OCR_TIME;
@@ -139,7 +140,7 @@ struct pixel {
     self.isOCRing = YES;
     //self.cancelOCR = NO;
     
-    //dispatch_async(self.cropImageQueue, ^{
+    dispatch_async(self.ocrImageQueue, ^{
         cv::Mat mat = [CVTools cvMatFromUIImage:image];
         std::vector<cv::Rect> bounds = [self bounsArrayToVectors:boundsArray];
         if (bounds.size() > 0){
@@ -155,28 +156,28 @@ struct pixel {
                 NSLog(@"recognizedText= %@", trimmedString);
                 
                 if (self.cancelOCR == YES){
-                    //dispatch_sync(dispatch_get_main_queue(), ^{
+                    dispatch_sync(dispatch_get_main_queue(), ^{
                         [self.delegate cancelledOCR];
-                    //});
+                    });
                 }else{
-                    //dispatch_sync(dispatch_get_main_queue(), ^{
+                    dispatch_sync(dispatch_get_main_queue(), ^{
                         [self.delegate finishOCR:trimmedString image:image];
 
-                    //});
+                    });
                 }
                 self.isOCRing = NO;
                 self.cancelOCR = NO;
                 
             }];
         }else {
-    //        dispatch_sync(dispatch_get_main_queue(), ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.delegate failedOCR:OCRERRROR_NOBOUNDS];
-    //        });
+            });
             self.isOCRing = NO;
             self.cancelOCR = NO;
         }
 
-    //});
+    });
     
 }
 
@@ -211,20 +212,19 @@ struct pixel {
     //    cvtColor(wmat, image_copy, CV_RGBA2GRAY);
     //    wmat = image_copy;
     
-    
     UIImage *whiteImage = [CVTools UIImageFromCVMat:wmat];
     
     
 // SyncOCR
-//    NSString *ocrResult = [self doOCR_sync:whiteImage];
-//    complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+    NSString *ocrResult = [self doOCR_sync:whiteImage];
+    complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
     
     
 // AsyncOCR
-    [self doOCR_async:whiteImage complete:^(NSString *recognizedText) {
-         NSString *ocrResult=recognizedText;
-         complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
-    }];
+//    [self doOCR_async:whiteImage complete:^(NSString *recognizedText) {
+//         NSString *ocrResult=recognizedText;
+//         complete(ocrResult, [CVTools UIImageFromCVMat:wmat]);
+//    }];
     
   
 }
@@ -256,7 +256,9 @@ struct pixel {
         wmat.setTo(cv::Scalar(red*255,green*255,blue*255));
         isDrawBorder = YES;
     }
+
     
+//    CGFloat minX = 1000, minY =1000, maxX = -1, maxY = -1;
     
     for(int i=0; i< letterBoxes.size(); i++){
         cv::Rect rect = letterBoxes[i];
@@ -268,12 +270,32 @@ struct pixel {
         Mat imgPanelRoi(wmat, rect);
         cmat.copyTo(imgPanelRoi);
         
+//        minX = MIN(minX, rect.x);
+//        maxX = MAX(maxX, rect.x+rect.width);
+//        minY = MIN(minY, rect.y);
+//        maxY = MAX(maxY, rect.y+rect.height);
+        
         if (isDrawBorder && cmat.data !=NULL && wmat.data !=NULL && wmat.rows!= 0 && rect.width != 0) {
             cv::rectangle(wmat,rect,cv::Scalar(250,250,250),2,16,0);
         }
     }
-    return wmat;
     
+//    cv::Size matSize = wmat.size();
+//    minX = MAX(minX-50, 0);
+//    minY = MAX(minY-50, 0);
+//    CGFloat cropWidth = MIN(maxX-minX+50, matSize.width);
+//    CGFloat cropHeight = MIN(maxY-minY+50, matSize.height);
+//    cv::Rect unionORI(minX, minY, cropWidth, cropHeight);
+//    cv::Mat croppedRef(wmat, unionORI);
+//    cv::Mat cropped;
+//    croppedRef.copyTo(cropped);
+//    wmat = cropped;
+////
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:wmat]];
+    });
+    
+    return wmat;
 }
 
 
@@ -281,12 +303,9 @@ struct pixel {
     
     // Mark below for avoiding BSXPCMessage error
     UIImage *bwImage = [image g8_blackAndWhite];
-    
-    
+
     self.tesseract.image =  bwImage;
-    
     //self.tesseract.rect = CGRectMake(20, 20, 100, 100);
-    
     [self.tesseract recognize];
     
     //    NSArray *characterBoxes = [tesseract recognizedBlocksByIteratorLevel:G8PageIteratorLevelSymbol];
@@ -297,7 +316,7 @@ struct pixel {
     NSString *recognizedText = self.tesseract.recognizedText;
     
     [self.ocrResultArray addObject:recognizedText];
-    [G8Tesseract clearCache];
+    //[G8Tesseract clearCache];
     return recognizedText;
 }
 
@@ -347,7 +366,7 @@ struct pixel {
 
     cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
     
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(21, 5) );
+    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 5) );
     cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
     
     //[self.delegate ocrDebugImage:[CVTools UIImageFromCVMat:img_threshold]];

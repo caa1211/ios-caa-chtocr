@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		282E330A647A176DEAE82FEE /* libPods-ios-caa-chtocr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE43E5A5F6AEC434FCD205C3 /* libPods-ios-caa-chtocr.a */; };
+		AD4038FF1B93F43100104FA1 /* OCRResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4038FE1B93F43100104FA1 /* OCRResultView.m */; };
+		AD4039011B93F43F00104FA1 /* OCRResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD4039001B93F43F00104FA1 /* OCRResultView.xib */; };
+		AD4039041B94093300104FA1 /* NBSlideUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4039031B94093300104FA1 /* NBSlideUpView.m */; };
 		AD82DEA81B8E1E710056DE50 /* YOCREngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEA71B8E1E710056DE50 /* YOCREngine.mm */; };
-		AD82DEAB1B8E1E990056DE50 /* TestViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */; };
 		AD82DEAE1B8E1EB90056DE50 /* UIImageViewAligned.m in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEAD1B8E1EB90056DE50 /* UIImageViewAligned.m */; };
-		AD82DEB01B8E1F120056DE50 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */; };
 		AD82DEB51B8E202D0056DE50 /* OCRViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */; };
 		AD82DEB61B8E202D0056DE50 /* OCRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */; };
 		AD82DEB91B8E24220056DE50 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = AD82DEB81B8E24220056DE50 /* ImageTools.m */; };
@@ -65,13 +66,15 @@
 
 /* Begin PBXFileReference section */
 		83E056414432CE5856D67BB8 /* Pods-ios-caa-chtocr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-caa-chtocr.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-caa-chtocr/Pods-ios-caa-chtocr.release.xcconfig"; sourceTree = "<group>"; };
+		AD4038FD1B93F43100104FA1 /* OCRResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCRResultView.h; sourceTree = "<group>"; };
+		AD4038FE1B93F43100104FA1 /* OCRResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCRResultView.m; sourceTree = "<group>"; };
+		AD4039001B93F43F00104FA1 /* OCRResultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OCRResultView.xib; sourceTree = "<group>"; };
+		AD4039021B94093300104FA1 /* NBSlideUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSlideUpView.h; sourceTree = "<group>"; };
+		AD4039031B94093300104FA1 /* NBSlideUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSlideUpView.m; sourceTree = "<group>"; };
 		AD82DEA61B8E1E710056DE50 /* YOCREngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOCREngine.h; sourceTree = "<group>"; };
 		AD82DEA71B8E1E710056DE50 /* YOCREngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YOCREngine.mm; sourceTree = "<group>"; };
-		AD82DEA91B8E1E990056DE50 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestViewController.mm; sourceTree = "<group>"; };
 		AD82DEAC1B8E1EB90056DE50 /* UIImageViewAligned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewAligned.h; sourceTree = "<group>"; };
 		AD82DEAD1B8E1EB90056DE50 /* UIImageViewAligned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewAligned.m; sourceTree = "<group>"; };
-		AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		AD82DEB21B8E202D0056DE50 /* OCRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCRViewController.h; sourceTree = "<group>"; };
 		AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCRViewController.mm; sourceTree = "<group>"; };
 		AD82DEB41B8E202D0056DE50 /* OCRViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OCRViewController.xib; sourceTree = "<group>"; };
@@ -184,13 +187,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AD4038FC1B93F40C00104FA1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AD4038FD1B93F43100104FA1 /* OCRResultView.h */,
+				AD4038FE1B93F43100104FA1 /* OCRResultView.m */,
+				AD4039001B93F43F00104FA1 /* OCRResultView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		AD82DEB11B8E1F9B0056DE50 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				ADCAA6101B7CEE5700944FA8 /* ViewController.h */,
-				AD82DEA91B8E1E990056DE50 /* TestViewController.h */,
-				AD82DEAF1B8E1F120056DE50 /* TestViewController.xib */,
-				AD82DEAA1B8E1E990056DE50 /* TestViewController.mm */,
 				ADCAA6111B7CEE5700944FA8 /* ViewController.mm */,
 				AD82DEB21B8E202D0056DE50 /* OCRViewController.h */,
 				AD82DEB31B8E202D0056DE50 /* OCRViewController.mm */,
@@ -205,6 +215,8 @@
 		ADC1DB5B1B7D01E800A0D165 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				AD4039021B94093300104FA1 /* NBSlideUpView.h */,
+				AD4039031B94093300104FA1 /* NBSlideUpView.m */,
 				AD82DEA61B8E1E710056DE50 /* YOCREngine.h */,
 				AD82DEA71B8E1E710056DE50 /* YOCREngine.mm */,
 				AD82DEAC1B8E1EB90056DE50 /* UIImageViewAligned.h */,
@@ -242,6 +254,7 @@
 		ADCAA6081B7CEE5700944FA8 /* ios-caa-chtocr */ = {
 			isa = PBXGroup;
 			children = (
+				AD4038FC1B93F40C00104FA1 /* Views */,
 				ADF4527C1B8EAFED00E6903D /* OCGumbo */,
 				ADC1DB431B7CF15A00A0D165 /* tessdata */,
 				ADC1DB5B1B7D01E800A0D165 /* Tools */,
@@ -427,10 +440,10 @@
 				ADC1DB441B7CF15A00A0D165 /* tessdata in Resources */,
 				ADF452A21B8EAFED00E6903D /* char_ref.rl in Resources */,
 				AD82DEB61B8E202D0056DE50 /* OCRViewController.xib in Resources */,
+				AD4039011B93F43F00104FA1 /* OCRResultView.xib in Resources */,
 				ADCAA61A1B7CEE5700944FA8 /* LaunchScreen.xib in Resources */,
 				ADC1DB491B7CF59F00A0D165 /* testImages in Resources */,
 				ADF452AA1B8EAFED00E6903D /* tag.in in Resources */,
-				AD82DEB01B8E1F120056DE50 /* TestViewController.xib in Resources */,
 				ADF452741B8E658900E6903D /* ImagePickerViewController.xib in Resources */,
 				ADCAA6171B7CEE5700944FA8 /* Images.xcassets in Resources */,
 			);
@@ -483,6 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD4038FF1B93F43100104FA1 /* OCRResultView.m in Sources */,
 				ADF452A61B8EAFED00E6903D /* parser.c in Sources */,
 				ADF452A51B8EAFED00E6903D /* OCGumbo.m in Sources */,
 				ADF452A71B8EAFED00E6903D /* string_buffer.c in Sources */,
@@ -496,7 +510,7 @@
 				AD82DEA81B8E1E710056DE50 /* YOCREngine.mm in Sources */,
 				ADCAA60F1B7CEE5700944FA8 /* AppDelegate.m in Sources */,
 				ADF452A91B8EAFED00E6903D /* tag.c in Sources */,
-				AD82DEAB1B8E1E990056DE50 /* TestViewController.mm in Sources */,
+				AD4039041B94093300104FA1 /* NBSlideUpView.m in Sources */,
 				AD82DEB91B8E24220056DE50 /* ImageTools.m in Sources */,
 				ADF452A01B8EAFED00E6903D /* attribute.c in Sources */,
 				ADCAA60C1B7CEE5700944FA8 /* main.m in Sources */,

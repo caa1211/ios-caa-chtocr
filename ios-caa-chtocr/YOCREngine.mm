@@ -21,7 +21,7 @@ using namespace cv;
 
 #define OCR_TIME 8
 
-#define OCR_BLOCK_LIST @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶鬣襞浤"
+#define OCR_BLOCK_LIST @"乎撇卹黴犬冉鬥愜乒煒蒿咖乂紂噩絜蚳岍圭遏毗咽囓鬮軹[]駟酉彊【】窐奎瞰姍儡嘶鬣襞浤颺噥"
 #define OCR_LANGUAGE @"chi_tra"
 #define OCR_FILTER_CHARS @" 己皿邯硯菂唰珈」屾,=-)(*&^%$#@!~}{?></:.;\"\'`ˉ\n"
 

@@ -12,7 +12,7 @@
 
 + (NSMutableArray *) googleTypeRighterSync:(NSString *)keyword {
     NSMutableArray *resAry = [[NSMutableArray alloc]init];
-    NSInteger maxShowingNum = 5;
+    NSInteger maxShowingNum = TYPERIGHTER_MAX_NUM;
     NSString* queryKeyword =[keyword stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    NSString *agentString = @"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X; en-us) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53";
     NSString *url =[NSString stringWithFormat:@"https://www.google.com.tw/search?q=%@&ie=UTF-8&oe=UTF-8",queryKeyword];
@@ -87,7 +87,7 @@
                  }
              }
              
-             NSLog(@"Rokenization Result: %@", resultStr);
+             NSLog(@"Tokenization Result: %@", resultStr);
              
              dispatch_sync(dispatch_get_main_queue(), ^{
                  completion(resultStr, nil);

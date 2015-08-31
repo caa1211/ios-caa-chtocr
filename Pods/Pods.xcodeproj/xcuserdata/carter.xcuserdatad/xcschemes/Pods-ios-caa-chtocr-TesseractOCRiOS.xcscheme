@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0EB1549224C9F98E086E3AC1"
+               BlueprintIdentifier = "703795089C8159BF58A200AE"
                BuildableName = "libPods-ios-caa-chtocr-TesseractOCRiOS.a"
                BlueprintName = "Pods-ios-caa-chtocr-TesseractOCRiOS"
                ReferencedContainer = "container:Pods.xcodeproj">

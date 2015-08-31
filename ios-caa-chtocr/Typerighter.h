@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "OCGumbo/OCGumbo+Query.h"
 
+#define TYPERIGHTER_MAX_NUM 4
+
 @interface Typerighter : NSObject
 + (void)googleTypeRighter:(NSString *)keyword completion: (void(^)(NSMutableArray *result, NSError *error))completion;
 + (NSMutableArray *) googleTypeRighterSync:(NSString *)keyword;

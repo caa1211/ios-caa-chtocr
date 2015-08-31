@@ -7,7 +7,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OCRViewController">
             <connections>
                 <outlet property="debugImageView" destination="mnb-YM-Jmc" id="CVJ-f6-B7F"/>
-                <outlet property="debugLabel" destination="xaw-qj-0bB" id="jia-Lq-Ai9"/>
                 <outlet property="drawView" destination="jIF-nN-IXm" id="hOH-dN-KXb"/>
                 <outlet property="ocrImageView" destination="JaV-tj-Wyc" id="h43-cm-KE6"/>
                 <outlet property="ocrWrapperView" destination="XrM-Li-Ili" id="BTl-jv-Zk7"/>
@@ -82,32 +81,14 @@
                                 </mask>
                             </variation>
                         </progressView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaw-qj-0bB">
-                            <rect key="frame" x="0.0" y="44" width="320" height="20.5"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20.5" id="dKE-sI-kWl"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="yl8-lw-Ybn" secondAttribute="centerX" id="8bi-ff-MPf"/>
                         <constraint firstAttribute="bottom" secondItem="yl8-lw-Ybn" secondAttribute="bottom" constant="80" id="Be4-mf-Aju"/>
-                        <constraint firstAttribute="trailing" secondItem="xaw-qj-0bB" secondAttribute="trailing" id="HEF-I4-vir"/>
-                        <constraint firstAttribute="bottom" secondItem="xaw-qj-0bB" secondAttribute="bottom" constant="35" id="Jjv-3W-2yI"/>
-                        <constraint firstItem="xaw-qj-0bB" firstAttribute="top" secondItem="yl8-lw-Ybn" secondAttribute="bottom" constant="80" id="OZO-T1-TOw"/>
-                        <constraint firstItem="xaw-qj-0bB" firstAttribute="leading" secondItem="jcd-2k-6Ou" secondAttribute="leading" id="fen-V1-D7W"/>
                         <constraint firstAttribute="height" constant="100" id="nVu-cG-eYL"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="uMa-q5-BDp"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="OZO-T1-TOw"/>
-                        </mask>
-                    </variation>
                 </view>
                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mnb-YM-Jmc" userLabel="debugImageView">
                     <rect key="frame" x="0.0" y="468" width="60" height="100"/>
@@ -143,9 +124,9 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="ob7-ix-t5t"/>
                     <exclude reference="KWI-ee-pcx"/>
                     <exclude reference="yTZ-3o-gZq"/>
-                    <exclude reference="ob7-ix-t5t"/>
                 </mask>
             </variation>
         </view>

@@ -11,9 +11,11 @@
 #import "UIImageViewAligned.h"
 #import "ImageTools.h"
 #import "Typerighter.h"
+#import "NBSlideUpView.h"
+#import "OCRResultView.h"
+#import "ImagePickerViewController.h"
 
-
-@interface OCRViewController () <YOCREngineDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface OCRViewController () <YOCREngineDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NBSlideUpViewDelegate, OCRResultViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageViewAligned *ocrImageView;
 @property (strong, nonatomic) YOCREngine *ocr;
 @property (weak, nonatomic) IBOutlet UIImageView *drawView;
@@ -22,7 +24,6 @@
 @property (strong, nonatomic) NSMutableArray *labelBoundsArray_screen;
 @property (strong, nonatomic) NSMutableArray *selectLabelBounds;
 @property (strong, nonatomic) UIImage* sourceImage;
-@property (weak, nonatomic) IBOutlet UITextView *debugLabel;
 @property (weak, nonatomic) IBOutlet UIView *ocrWrapperView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (assign, nonatomic) BOOL isImageOCRed;
@@ -30,6 +31,8 @@
 @property (strong, nonatomic) NSMutableArray *ocrResults; //Collected from related search
 @property (weak, nonatomic) IBOutlet UIImageView *debugImageView;
 @property (strong, nonatomic) NSString *ocrRawResult; // OCR raw result
+@property (nonatomic, strong) NBSlideUpView *slideUpView;
+@property (nonatomic, strong) OCRResultView *ocrResultView;
 @end
 
 @implementation OCRViewController
@@ -41,7 +44,6 @@
     if (self) {
         _sourceImage = image;
     }
-    
     return self;
 }
 
@@ -49,7 +51,7 @@
     [super viewDidLoad];
     
     self.debugImageView.hidden = YES;
-    
+
     self.ocrImageView.alignTop = YES;
     self.ocrImageView.alignLeft = YES;
     self.ocr = [[YOCREngine alloc]init];
@@ -63,6 +65,17 @@
         [self ocrImage];
         self.isImageOCRed = YES;
     }
+    
+    self.slideUpView = [[NBSlideUpView alloc] initWithSuperview:self.view viewableHeight:200];
+    self.slideUpView.delegate = self;
+    
+    self.ocrResultView = [[OCRResultView alloc] initWithDelegate:self];
+    [self.slideUpView.contentView addSubview:self.ocrResultView];
+    
+    
+//    self.slideUpView.shouldBlockSuperviewTouchesWhileUp = YES;
+//    self.slideUpView.shouldTapSuperviewToAnimateOut = YES;
+    
 }
 
 -(void) viewDidDisappear:(BOOL)animated {
@@ -72,12 +85,20 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+}
+
+
+
+-(void) initDrawingStatus {
+    _typerRighterCount = 0;
+    self.drawView.image = [[UIImage alloc] init];
+    self.progressView.progress = 0;
 
 }
 
+
 -(void) ocrImage {
 
-    _typerRighterCount = 0;
     _labelBoundsArray_image = [[NSMutableArray alloc] init];
     _labelBoundsArray_screen = [[NSMutableArray alloc] init];
     _selectLabelBounds = [[NSMutableArray alloc] init];
@@ -86,9 +107,7 @@
         self.ocr.cancelOCR = YES;
     }
     
-    self.drawView.image = [[UIImage alloc] init];
-    self.progressView.progress = 0;
-    self.debugLabel.text = @"";
+    [self initDrawingStatus];
     
     _sourceImage = [self unifyImage:_sourceImage];
     self.ocrImageView.image = _sourceImage;
@@ -115,7 +134,7 @@
         
         UIView *rectangleFill = [[UIView alloc] initWithFrame:rect];
         rectangleFill.alpha = 0.2;
-        rectangleFill.backgroundColor = [UIColor whiteColor];
+        rectangleFill.backgroundColor = [UIColor colorWithRed:1.000 green:0.986 blue:0.129 alpha:0.500];
         rectangleFill.layer.cornerRadius = cornerRadius;
         [self.drawView addSubview:rectangleFill];
         
@@ -258,9 +277,14 @@
 
 #pragma mark - OCR delegate
 
+-(void) failedOCR: (OCRERRROR)errorCode {
+    [self noOCRResult];
+    //no drawn bounds
+    self.progressView.progress = 0;
+}
+
 -(void) startOCR {
     self.progressView.progress = 0;
-    self.debugLabel.text = @"";
 }
 -(void) progressOCR:(NSInteger)progress{
    self.progressView.progress = (float)progress/100;
@@ -284,8 +308,8 @@
         [_ocrResults addObject:_ocrRawResult];
         
         NSString *joinedString = [_ocrResults componentsJoinedByString:@", "];
-        self.debugLabel.text = joinedString;
         NSLog(@"ocr joinedString: %@", joinedString);
+        [self showOCRResults];
         // End
         _typerRighterCount = 0;
         self.progressView.progress = 1;
@@ -322,18 +346,46 @@
     self.debugImageView.image = image;
 }
 
--(void) failedOCR: (OCRERRROR)errorCode {
-    self.debugLabel.text = @"[no drawn bounds]";
-    self.progressView.progress = 0;
-}
-
-
 -(void) cancelledOCR{
     NSLog(@"===========cancelledOCR================");
 }
 
+-(void) showOCRResults {
+    if(_ocrResults.count>0){
+        //self.slideUpView.viewablePixels = MAX(OCRResultViewCellHeight * _ocrResults.count, OCRResultViewCellHeight * (TYPERIGHTER_MAX_NUM+2));
+        self.slideUpView.viewablePixels = OCRResultViewCellHeight * _ocrResults.count;
+        self.ocrResultView.ocrResults = _ocrResults;
+        [self.slideUpView animateIn];
+    }else{
+        [self noOCRResult];
+    }
+}
+
+-(void) noOCRResult {
+    // TODO: error message
+
+}
 
 
+#pragma mark - NBSlideUpViewDelegate
+
+- (void)slideUpViewDidAnimateIn:(UIView *)slideUpView {
+    NSLog(@"NBSlideUpView animated in.");
+}
+
+- (void)slideUpViewDidAnimateOut:(UIView *)slideUpView {
+    NSLog(@"NBSlideUpView animated out.");
+    [self initDrawingStatus];
+    
+}
+
+- (void)slideUpViewDidAnimateRestore:(UIView *)slideUpView {
+    NSLog(@"NBSlideUpView animated restore.");
+}
+
+- (void) didSelectOCRResult:(NSString *)ocrResult {
+
+}
 
 /*
 #pragma mark - Navigation

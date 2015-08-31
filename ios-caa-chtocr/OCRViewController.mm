@@ -14,6 +14,7 @@
 #import "NBSlideUpView.h"
 #import "OCRResultView.h"
 #import "ImagePickerViewController.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 @interface OCRViewController () <YOCREngineDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NBSlideUpViewDelegate, OCRResultViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageViewAligned *ocrImageView;
@@ -134,7 +135,7 @@
         
         UIView *rectangleFill = [[UIView alloc] initWithFrame:rect];
         rectangleFill.alpha = 0.2;
-        rectangleFill.backgroundColor = [UIColor whiteColor alpha:0.300];
+        rectangleFill.backgroundColor = [UIColor colorWithRed:1 green:0.975 blue:1.000 alpha:0.500];
         rectangleFill.layer.cornerRadius = cornerRadius;
         [self.drawView addSubview:rectangleFill];
         
@@ -175,7 +176,10 @@
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 23.0);
    
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.23, 0.67, 0.86, 0.4);
+    UIColor *brushColor = [UIColor colorWithRed:0.363 green:0.763 blue:1.000 alpha:0.200]; //0.23, 0.67, 0.86, 0.4
+    const CGFloat* colors = CGColorGetComponents( brushColor.CGColor );
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), colors[0], colors[1], colors[2], colors[3]);
+    
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
     //CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
     CGContextAddQuadCurveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y, pointNext.x, pointNext.y);

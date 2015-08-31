@@ -26,10 +26,6 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jIF-nN-IXm" userLabel="drawView">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
-                            <gestureRecognizers/>
-                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPB-3a-PFS">
                             <rect key="frame" x="96" y="359" width="128" height="41"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,6 +40,10 @@
                                 <action selector="onRetake:" destination="-1" eventType="touchUpInside" id="YCd-md-OHI"/>
                             </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jIF-nN-IXm" userLabel="drawView">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
+                            <gestureRecognizers/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.31718291479999999" green="0.73208986539999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <accessibility key="accessibilityConfiguration">

@@ -134,7 +134,7 @@
         
         UIView *rectangleFill = [[UIView alloc] initWithFrame:rect];
         rectangleFill.alpha = 0.2;
-        rectangleFill.backgroundColor = [UIColor colorWithRed:1.000 green:0.986 blue:0.129 alpha:0.500];
+        rectangleFill.backgroundColor = [UIColor whiteColor alpha:0.300];
         rectangleFill.layer.cornerRadius = cornerRadius;
         [self.drawView addSubview:rectangleFill];
         
@@ -164,15 +164,24 @@
     [_selectLabelBounds removeAllObjects];
 }
 
+- (NSNumber *)fabs:(NSNumber *)input {
+    return [NSNumber numberWithDouble:fabs([input doubleValue])];
+}
+
 -(void) drawMove: (CGPoint)point {
     CGPoint pointNext = point;
 
     UIGraphicsBeginImageContext(self.drawView.frame.size);
     [self.drawView.image drawInRect:CGRectMake(0, 0, self.drawView.frame.size.width, self.drawView.frame.size.height)];
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 20.0);
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.23, 0.67, 0.86, 0.7);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 23.0);
+   
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.23, 0.67, 0.86, 0.4);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
+    //CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), pointNext.x, pointNext.y);
+    CGContextAddQuadCurveToPoint(UIGraphicsGetCurrentContext(), _pointCurrent.x, _pointCurrent.y, pointNext.x, pointNext.y);
+    
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+   
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.drawView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

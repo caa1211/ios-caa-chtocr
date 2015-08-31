@@ -128,8 +128,8 @@
         UIView *rectangle = [[UIView alloc] initWithFrame:rect];
         rectangle.alpha = 0.7;
         //rectangle.backgroundColor = [UIColor whiteColor];
-        rectangle.layer.borderColor = [UIColor redColor].CGColor;
-        rectangle.layer.borderWidth = 2.0f;
+        rectangle.layer.borderColor = [UIColor colorWithRed:1.000 green:0.345 blue:0.328 alpha:1.000].CGColor;
+        rectangle.layer.borderWidth = 2.5f;
         rectangle.layer.cornerRadius = cornerRadius;
         [self.drawView addSubview:rectangle];
         

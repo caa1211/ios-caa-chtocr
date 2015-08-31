@@ -385,7 +385,7 @@ struct pixel {
             cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
             
             
-            if ( (float)appRect.width / appRect.height > 2 &&
+            if ( (float)appRect.width / appRect.height > 1.3 &&
                 appRect.height > 20){
                 boundRect.push_back(appRect);
             }
